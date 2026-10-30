@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Inovalab · Análisis para tu bienestar</title>
-<meta name="description" content="Laboratorio de análisis clínicos en Ticul, Oxkutzcab, Maní y Peto. Ciencia, tecnología y trato humano para que cuidar tu salud se sienta mejor.">
+<meta name="description" content="Análisis clínicos y ultrasonido en Ticul, Oxkutzcab y Peto, con servicio a domicilio en Yucatán. Ciencia, tecnología y trato humano para que cuidar tu salud se sienta mejor.">
 <link rel="icon" href="assets/inovalab-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
+  @font-face{font-family:"Cooper Lt BT";src:url("assets/cooper-lt-bt-bold.ttf") format("truetype");font-weight:100 900;font-display:swap}
   :root{
     --purple:#721F86;
     --purple-deep:#561466;
@@ -23,6 +25,7 @@
     --ink:#1B1220;
     --radius:28px;
     --wave-h:28px;
+    --ease:cubic-bezier(.22,1,.36,1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;overflow-x:clip}
@@ -30,7 +33,7 @@
   img{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
   .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
-  .display{font-family:"Bebas Neue",Impact,sans-serif;font-weight:400;line-height:.88;letter-spacing:.01em;text-transform:uppercase}
+  .display{font-family:"Cooper Lt BT",Impact,sans-serif;font-weight:400;line-height:1.08;letter-spacing:.01em;text-transform:uppercase}
   .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
   .eyebrow::before{content:"";width:28px;height:3px;border-radius:3px;background:currentColor}
 
@@ -62,9 +65,11 @@
   .nav__mobile{display:none}
 
   /* ---------- hero ---------- */
-  .hero{position:relative;padding:clamp(3rem,7vw,6rem) 0 clamp(4rem,8vw,7rem)}
+  .hero{padding:clamp(3rem,7vw,6rem) 0 clamp(4rem,8vw,7rem)}
+  .stack>:first-child{position:sticky;top:var(--pin-top,0px);z-index:0}
+  .stack>:nth-child(n+2){position:relative;z-index:1}
   .hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center}
-  .hero h1{font-size:clamp(4rem,10.5vw,9.6rem);color:var(--purple);margin:1.1rem 0 1.4rem}
+  .hero h1{font-size:clamp(2.6rem,5.4vw,4.6rem);color:var(--purple);margin:1.1rem 0 1.4rem}
   .hero h1 .pink{color:var(--magenta)}
   .hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--purple)}
   .hero__lead{font-size:clamp(1.05rem,1.4vw,1.2rem);max-width:520px;color:#3d3044}
@@ -74,7 +79,7 @@
   @keyframes morph{50%{border-radius:58% 42% 55% 45%/42% 58% 42% 58%}}
   .hero__art svg.doodle{position:absolute;inset:0;width:100%;height:100%}
   .sticker{position:absolute;background:#fff;border:2px solid var(--purple);border-radius:20px;padding:.75rem 1rem;box-shadow:0 5px 0 var(--purple);font-weight:600;font-size:.85rem;line-height:1.25;display:flex;gap:.6rem;align-items:center}
-  .sticker b{font-family:"Bebas Neue";font-size:2rem;font-weight:400;color:var(--magenta);line-height:1}
+  .sticker b{font-family:"Cooper Lt BT";font-size:1.5rem;font-weight:400;color:var(--magenta);line-height:1}
   .sticker--a{left:-6%;bottom:12%;transform:rotate(-6deg);animation:float 6s ease-in-out infinite}
   .sticker--b{right:-4%;top:8%;transform:rotate(5deg);animation:float 7s ease-in-out infinite reverse}
   @keyframes float{50%{translate:0 -10px}}
@@ -85,17 +90,17 @@
   @keyframes draw{to{stroke-dashoffset:0}}
 
   /* wavy edges */
-  .wave{display:block;width:100%;height:var(--wave-h)}
+  .wave{display:block;width:112.5%;max-width:none;height:var(--wave-h)}
 
   /* ---------- problem / solution ---------- */
   .ps{background:var(--purple);color:#fff;padding:clamp(4rem,8vw,7rem) 0;position:relative}
   .ps .eyebrow{color:var(--blush)}
   .ps__head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:3rem}
-  .ps__head h2{font-size:clamp(3rem,7vw,6rem)}
+  .ps__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
   .ps__head h2 span{color:var(--orchid)}
   .ps__grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
   .card{border-radius:var(--radius);padding:clamp(1.8rem,3vw,2.6rem);position:relative;overflow:hidden}
-  .card h3{font-size:clamp(2.4rem,4vw,3.4rem);margin-bottom:1rem}
+  .card h3{font-size:clamp(1.6rem,2.6vw,2.2rem);margin-bottom:1rem}
   .card p{font-size:1.05rem}
   .card p+p{margin-top:.9rem}
   .card--before{background:var(--purple-deep);border:2px dashed rgba(255,255,255,.35)}
@@ -115,25 +120,26 @@
   /* ---------- values marquee ---------- */
   .values-band{background:var(--magenta);color:#fff;overflow:hidden;white-space:nowrap;border-block:3px solid var(--purple);rotate:-2deg;margin:-1.6rem -2rem 0;position:relative;z-index:5}
   .values-band__track{display:inline-flex;animation:marquee 26s linear infinite;padding:.9rem 0}
-  .values-band__track span{font-family:"Bebas Neue";font-size:clamp(2rem,4vw,3.2rem);padding:0 1.4rem;display:inline-flex;align-items:center;gap:2.8rem;line-height:1}
+  .values-band__track span{font-family:"Cooper Lt BT";font-size:clamp(1.4rem,2.6vw,2.2rem);padding:0 1.4rem;display:inline-flex;align-items:center;gap:2.8rem;line-height:1}
   .values-band__track span::after{content:"";width:22px;height:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/%3E%3C/svg%3E") center/contain no-repeat}
 
   /* ---------- about ---------- */
   .about{padding:clamp(5rem,9vw,8rem) 0 clamp(4rem,7vw,6rem)}
-  .about__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:start}
-  .about h2{font-size:clamp(3.2rem,7vw,6.2rem);color:var(--purple);margin:1rem 0 1.4rem}
+  .about__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem)}
+  .about h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin:1rem 0 1.4rem}
   .about h2 span{color:var(--magenta)}
   .about__text p{font-size:1.05rem;color:#3d3044}
   .about__text p+p{margin-top:1rem}
   .about__since{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.8rem;background:#fff;border:2px solid var(--purple);border-radius:999px;padding:.45rem 1.1rem .45rem .45rem;font-weight:600;font-size:.92rem}
-  .about__since b{background:var(--purple);color:#fff;border-radius:999px;padding:.25rem .8rem;font-family:"Bebas Neue";font-weight:400;font-size:1.3rem;letter-spacing:.04em}
-  .stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .about__since b{background:var(--purple);color:#fff;border-radius:999px;padding:.25rem .8rem;font-family:"Cooper Lt BT";font-weight:400;font-size:1.3rem;letter-spacing:.04em}
+  .stats{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto 1fr;gap:1rem}
+  .stats__photo{grid-column:1/-1;min-height:240px;margin-top:.6rem;box-shadow:0 6px 0 var(--magenta)}
   .stat{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);padding:1.6rem 1.4rem;box-shadow:0 6px 0 var(--purple);transition:transform .25s}
   .stat:hover{transform:translateY(-4px) rotate(-1deg)}
   .stat:nth-child(2){background:var(--purple);color:#fff;box-shadow:0 6px 0 var(--magenta)}
   .stat:nth-child(3){background:var(--blush)}
   .stat:nth-child(4){background:var(--magenta);color:#fff}
-  .stat__num{font-family:"Bebas Neue";font-size:clamp(3.4rem,6vw,5rem);line-height:.9;display:block}
+  .stat__num{font-family:"Cooper Lt BT";font-size:clamp(2.2rem,3.6vw,3rem);line-height:1;display:block}
   .stat:nth-child(1) .stat__num,.stat:nth-child(3) .stat__num{color:var(--purple)}
   .stat__label{font-weight:500;font-size:.95rem;margin-top:.4rem;display:block}
   .stats__title{grid-column:1/-1;font-weight:700;font-size:1.05rem;margin-bottom:.2rem;display:flex;align-items:center;gap:.6rem}
@@ -142,10 +148,10 @@
   /* ---------- philosophy ---------- */
   .philo{background:var(--cream);padding:clamp(4rem,8vw,7rem) 0;position:relative;overflow:hidden}
   .philo__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
-  .philo h2{font-size:clamp(3rem,6vw,5rem);color:var(--magenta);margin:1rem 0 1.2rem}
+  .philo h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--magenta);margin:1rem 0 1.2rem}
   .philo p{font-size:1.08rem;color:#3d3044}
   .philo__quote{position:relative;background:var(--purple);color:#fff;border-radius:40px 40px 40px 8px;padding:clamp(2rem,4vw,3.2rem);box-shadow:10px 10px 0 var(--orchid)}
-  .philo__quote blockquote{font-family:"Bebas Neue";font-size:clamp(2.6rem,5.2vw,4.6rem);line-height:.95}
+  .philo__quote blockquote{font-family:"Cooper Lt BT";font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.12}
   .philo__quote blockquote em{font-style:normal;color:var(--blush)}
   .philo__quote .qmark{position:absolute;top:-34px;left:28px;width:70px;height:70px;border-radius:50%;background:var(--magenta);display:grid;place-items:center;border:3px solid var(--cream)}
   .philo__quote .qmark svg{width:30px}
@@ -153,21 +159,23 @@
 
   /* ---------- mission / vision ---------- */
   .mv{padding:clamp(4rem,8vw,7rem) 0}
-  .mv__grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-  .mv__card{border-radius:var(--radius);padding:clamp(2rem,4vw,3.2rem);border:2px solid var(--purple);position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
-  .mv__card h3{font-size:clamp(3.4rem,7vw,6rem);color:var(--magenta)}
+  .mv__marquee{overflow:hidden;padding-block:.4rem 1rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .mv__grid{display:flex;width:max-content;animation:marquee 90s linear infinite}
+  .mv__marquee:hover .mv__grid{animation-play-state:paused}
+  .mv__card{flex:0 0 clamp(300px,42vw,620px);margin-right:1.5rem;border-radius:var(--radius);padding:clamp(2rem,4vw,3.2rem);border:2px solid var(--purple);position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+  .mv__card h3{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--magenta)}
   .mv__card p{font-size:clamp(1.4rem,2.4vw,2rem);font-weight:500;line-height:1.25;max-width:440px}
   .mv__card--m{background:#fff;box-shadow:0 8px 0 var(--purple)}
   .mv__card--v{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 8px 0 var(--magenta)}
   .mv__card--v h3{color:var(--blush)}
-  .mv__card .num{position:absolute;right:1.6rem;top:1.4rem;font-family:"Bebas Neue";font-size:1.2rem;letter-spacing:.1em;opacity:.55}
+  .mv__card .num{position:absolute;right:1.6rem;top:1.4rem;font-family:"Cooper Lt BT";font-size:1.2rem;letter-spacing:.1em;opacity:.55}
   .mv__card svg.corner{position:absolute;right:-18px;top:-18px;width:150px;opacity:.9;pointer-events:none}
   .mv__card .num{z-index:1}
 
   /* ---------- culture ---------- */
   .culture{background:var(--purple);color:#fff;padding:clamp(4rem,8vw,7rem) 0}
   .culture__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,5vw,5rem);align-items:start}
-  .culture h2{font-size:clamp(3.4rem,7vw,6.4rem);margin:1rem 0 1.2rem}
+  .culture h2{font-size:clamp(2.2rem,4.2vw,3.6rem);margin:1rem 0 1.2rem}
   .culture h2 span{color:var(--orchid)}
   .culture .eyebrow{color:var(--blush)}
   .culture__intro{opacity:.85;max-width:380px}
@@ -177,8 +185,8 @@
   .value[open]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
   .value summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:1.1rem;padding:1.1rem 1.4rem}
   .value summary::-webkit-details-marker{display:none}
-  .value__n{font-family:"Bebas Neue";font-size:1.1rem;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--magenta);color:#fff;flex-shrink:0}
-  .value__t{font-family:"Bebas Neue";font-size:clamp(2rem,3.4vw,2.8rem);line-height:1;flex:1;letter-spacing:.02em}
+  .value__n{font-family:"Cooper Lt BT";font-size:1.1rem;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--magenta);color:#fff;flex-shrink:0}
+  .value__t{font-family:"Cooper Lt BT";font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1;flex:1;letter-spacing:.02em}
   .value[open] .value__t{color:var(--purple)}
   .value__plus{width:34px;height:34px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;transition:rotate .3s;flex-shrink:0}
   .value[open] .value__plus{rotate:45deg;border-color:var(--purple);color:var(--purple)}
@@ -187,28 +195,79 @@
   /* ---------- locations ---------- */
   .loc{padding:clamp(4rem,8vw,7rem) 0}
   .loc__head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
-  .loc__head h2{font-size:clamp(3.2rem,7vw,6rem);color:var(--purple);margin-top:1rem}
+  .loc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
   .loc__head h2 span{color:var(--magenta)}
   .loc__head p{max-width:400px;color:#3d3044}
-  .loc__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+  .loc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
   .town{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;min-height:260px;transition:transform .25s, box-shadow .25s;box-shadow:0 6px 0 var(--purple)}
   .town:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--magenta)}
   .town__photo{aspect-ratio:4/3;border-radius:18px;margin:-.5rem -.5rem 0;padding:.5rem}
   .town__photo .ph__icon{width:36px;height:36px}
   .town__pin{margin-top:-2.6rem;margin-left:.6rem;border:2px solid #fff;position:relative;z-index:1;width:52px;height:52px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
   .town__pin svg{width:24px}
-  .town h3{font-family:"Bebas Neue";font-weight:400;font-size:2.8rem;line-height:.9;color:var(--purple)}
-  .town small{color:#6a5a72;font-size:.85rem}
-  .town a{margin-top:auto;font-weight:600;font-size:.9rem;color:var(--magenta);display:inline-flex;align-items:center;gap:.4rem}
+  .town h3{font-family:"Cooper Lt BT";font-weight:400;font-size:1.9rem;line-height:1.05;color:var(--purple)}
+  .town small{display:block;color:#6a5a72;font-size:.85rem}
+  .town__links{margin-top:auto;display:grid;justify-items:start;gap:.3rem}
+  .town a{font-weight:600;font-size:.9rem;color:var(--magenta);display:inline-flex;align-items:center;gap:.4rem}
   .town a:hover{gap:.7rem}
   .town:nth-child(2) .town__pin{background:#E3D2F0}
   .town:nth-child(3) .town__pin{background:#D9E2F5}
-  .town:nth-child(4) .town__pin{background:#F9D7EC}
+
+  /* ---------- coverage map ---------- */
+  .loc__map{height:clamp(420px,42vw,520px);isolation:isolate;border:2px solid var(--purple);border-radius:var(--radius);box-shadow:0 6px 0 var(--purple);overflow:hidden;background:#e6e1ea;scroll-margin-top:110px}
+  .loc__map.leaflet-container{font:inherit}
+  .loc__map .leaflet-tile-pane{filter:saturate(.55)}
+  .map-pulse{opacity:0;transform-box:fill-box;transform-origin:center;animation:zone-pulse 3.6s ease-out infinite}
+  @keyframes zone-pulse{0%{opacity:.75;transform:scale(.3)}75%,100%{opacity:0;transform:scale(1)}}
+  .map-pin{background:none;border:0;filter:drop-shadow(0 2px 2px rgba(27,18,32,.35))}
+  .map-pin svg{display:block;width:100%;height:100%}
+  .loc__map .leaflet-tooltip{background:#fff;border:2px solid var(--purple);border-radius:999px;box-shadow:none;color:var(--purple);font-weight:600;font-size:.78rem;padding:.1rem .6rem}
+  .loc__map .leaflet-tooltip::before{display:none}
+  .loc__map .leaflet-popup-content-wrapper{border-radius:18px;border:2px solid var(--purple);box-shadow:0 4px 0 var(--purple)}
+  .loc__map .leaflet-popup-content{margin:.8rem 1rem;font-size:.85rem;line-height:1.4}
+  .loc__map .leaflet-popup-content b{display:block;font-family:"Cooper Lt BT";font-weight:400;font-size:1.15rem;color:var(--purple)}
+  .loc__map .leaflet-popup-content a{display:block;margin-top:.3rem;font-weight:600;color:var(--magenta)}
+  .loc__legend{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;margin:1.2rem 0 2.4rem;font-size:.9rem;font-weight:500}
+  .loc__legend span{display:inline-flex;align-items:center;gap:.45rem}
+  .loc__legend svg{width:24px;height:24px;flex-shrink:0}
+
+  /* ---------- services ---------- */
+  .svc{padding:clamp(1rem,3vw,2rem) 0 clamp(4rem,7vw,6rem)}
+  .svc__head{max-width:640px;margin-bottom:2.2rem}
+  .svc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
+  .svc__head h2 span{color:var(--magenta)}
+  .svc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+  .svc__card{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);box-shadow:0 6px 0 var(--purple);padding:1.7rem;display:flex;flex-direction:column;align-items:flex-start;gap:.7rem}
+  .svc__card h3{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.1;color:var(--purple)}
+  .svc__card p{color:#3d3044}
+  .svc__card a{margin-top:auto;font-weight:600;font-size:.9rem;color:var(--magenta)}
+  .svc__card--main{grid-column:1/-1;background:var(--purple);box-shadow:0 6px 0 var(--magenta)}
+  .svc__card--main h3{color:#fff}
+  .svc__tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.3rem}
+  .svc__tags span{background:#fff;color:var(--purple);border-radius:999px;padding:.4rem 1.1rem;font-weight:600;font-size:.95rem;opacity:0;translate:0 12px;scale:.9;transition:opacity .5s ease, translate .6s var(--ease), scale .6s var(--ease);transition-delay:calc(var(--i)*70ms + .25s)}
+  .in .svc__tags span{opacity:1;translate:0 0;scale:1}
+  .svc__tags span:hover{animation:nudge .6s ease-in-out}
+  @keyframes nudge{25%{rotate:2.5deg}75%{rotate:-2.5deg}}
+  .svc__card:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--magenta)}
+  .svc__card--main:hover{box-shadow:0 12px 0 var(--purple-deep)}
+  .svc__card a span{display:inline-block;transition:translate .25s var(--ease)}
+  .svc__card:hover a span{translate:5px 0}
+
+  /* ---------- business ---------- */
+  .biz{padding:0 0 clamp(2.4rem,5vw,3.5rem)}
+  .biz__box{background:var(--navy);color:#fff;border-radius:40px;border:3px solid var(--purple);box-shadow:0 10px 0 var(--purple);padding:clamp(2.4rem,5vw,4.4rem);display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,4vw,3.5rem);align-items:center}
+  .biz__box .eyebrow{color:var(--blush)}
+  .biz__box h2{font-size:clamp(2.2rem,4.2vw,3.6rem);margin-top:1rem}
+  .biz__box h2 span{color:var(--blush)}
+  .biz__box p{margin:1rem 0 1.8rem}
+  .biz__list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+  .biz__list li{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-radius:20px;padding:1.1rem 1.2rem;font-size:.92rem;line-height:1.4}
+  .biz__list b{display:block;font-family:"Cooper Lt BT";font-weight:400;font-size:1.15rem;margin-bottom:.25rem}
 
   /* ---------- partners CTA ---------- */
   .partner{padding:0 0 clamp(4rem,8vw,7rem)}
   .partner__box{background:var(--magenta);color:#fff;border-radius:40px;border:3px solid var(--purple);box-shadow:0 10px 0 var(--purple);padding:clamp(2.4rem,5vw,4.4rem);display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:center;position:relative;overflow:hidden}
-  .partner__box h2{font-size:clamp(3rem,6.4vw,5.6rem)}
+  .partner__box h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
   .partner__box p{font-size:1.1rem;max-width:560px;margin:1rem 0 1.8rem}
   .partner__box .eyebrow{color:#fff}
   .partner__art{justify-self:center;rotate:3deg}
@@ -217,10 +276,10 @@
   footer{background:var(--purple);color:#fff;padding:clamp(3.5rem,7vw,5.5rem) 0 2rem}
   .foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.5rem}
   .foot__logo{width:240px}
-  .foot__tag{font-family:"Bebas Neue";font-size:clamp(2.6rem,5vw,4rem);line-height:.9;margin-top:1.6rem;max-width:460px}
+  .foot__tag{font-family:"Cooper Lt BT";font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.12;margin-top:1.6rem;max-width:460px}
   .foot__tag span{color:var(--orchid)}
   footer h4{font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);margin-bottom:1rem}
-  footer ul{list-style:none;display:grid;gap:.5rem}
+  footer ul{list-style:none;display:grid;gap:.5rem;overflow-wrap:anywhere}
   footer ul a:hover{color:var(--blush)}
   .socials{display:flex;gap:.6rem;margin-top:1.2rem}
   .socials a{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.4);display:grid;place-items:center;transition:background .2s,border-color .2s}
@@ -235,7 +294,7 @@
   .ph__inner{display:flex;flex-direction:column;align-items:center;gap:.35rem;max-width:90%}
   .ph__icon{width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:grid;place-items:center}
   .ph__icon svg{width:22px;height:22px}
-  .ph__tag{font-family:"Bebas Neue";font-size:1.05rem;letter-spacing:.08em;background:var(--purple);color:#fff;border-radius:999px;padding:.15rem .7rem}
+  .ph__tag{font-family:"Cooper Lt BT";font-size:1.05rem;letter-spacing:.08em;background:var(--purple);color:#fff;border-radius:999px;padding:.15rem .7rem}
   .ph[data-kind="gif"] .ph__tag{background:var(--magenta)}
   .ph__title{font-weight:700;font-size:.95rem;line-height:1.25}
   .ph__spec{font-size:.75rem;opacity:.75;line-height:1.3}
@@ -250,18 +309,24 @@
   /* gallery strip */
   .gallery{padding:clamp(5rem,9vw,7rem) 0 clamp(2rem,4vw,3rem)}
   .gallery__head{display:flex;justify-content:space-between;align-items:end;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
-  .gallery__head h2{font-size:clamp(3rem,6.5vw,5.6rem);color:var(--purple);margin-top:1rem}
+  .gallery__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
   .gallery__head h2 span{color:var(--magenta)}
-  .gallery__track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:1rem .5rem 1.5rem;margin-inline:-.5rem}
-  .gallery__track .ph{scroll-snap-align:start;aspect-ratio:4/5;box-shadow:0 6px 0 var(--purple)}
-  .gallery__track .ph:nth-child(even){aspect-ratio:4/5;margin-top:2.2rem}
-  .gallery__track .ph:nth-child(3n){rotate:1.5deg}
-  .gallery__track .ph:nth-child(3n+1){rotate:-1.5deg}
+  .gallery__track{--cw:clamp(200px,24vw,300px);position:relative;height:calc(var(--cw)*1.25*1.16 + 2.5rem)}
+  .gallery__track .ph{position:absolute;left:50%;top:50%;width:var(--cw);aspect-ratio:4/5;box-shadow:0 6px 0 var(--purple);opacity:.8;translate:calc(-50% + var(--o,0)*(var(--cw)*1.1 + 1.2rem)) -50%;transition:translate .7s var(--ease), scale .7s var(--ease), rotate .7s var(--ease), opacity .4s ease, box-shadow .3s ease}
+  .gallery__track .ph:nth-child(odd){rotate:-1.5deg}
+  .gallery__track .ph:nth-child(even){rotate:1.5deg}
+  .gallery__track .ph.is-active{scale:1.16;rotate:0deg;opacity:1;z-index:2;box-shadow:0 6px 0 var(--magenta)}
+  .gallery__track .ph.is-off{opacity:0;visibility:hidden;transition:translate .7s var(--ease), scale .7s var(--ease), rotate .7s var(--ease), opacity .4s ease, visibility 0s .4s}
+  .gallery__nav{display:flex;justify-content:center;gap:.8rem;margin-top:1rem}
+  .gallery__nav button{width:52px;height:52px;border-radius:50%;background:#fff;color:var(--purple);border:2px solid var(--purple);box-shadow:0 4px 0 var(--purple);display:grid;place-items:center;cursor:pointer;transition:transform .2s, box-shadow .2s, background .2s, color .2s}
+  .gallery__nav button:hover{background:var(--magenta);color:#fff;transform:translateY(-2px);box-shadow:0 6px 0 var(--purple)}
+  .gallery__nav button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple)}
+  .gallery__nav svg{width:22px;height:22px}
 
   /* social grid */
   .social{padding:0 0 clamp(4rem,8vw,6rem)}
   .social__head{text-align:center;margin-bottom:2rem}
-  .social__head h2{font-size:clamp(2.8rem,6vw,5rem);color:var(--purple);margin-top:.8rem}
+  .social__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:.8rem}
   .social__head h2 span{color:var(--magenta)}
   .social__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.8rem}
   .social__grid .ph{aspect-ratio:1;border-radius:20px;padding:.5rem}
@@ -274,13 +339,45 @@
   .wa svg{width:30px;height:30px}
 
   /* reveal */
-  .reveal{opacity:0;translate:0 36px;transition:opacity .8s ease, translate .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal{opacity:0;translate:0 28px;transition:opacity .9s ease, translate .9s var(--ease), scale .9s var(--ease), rotate .9s var(--ease)}
+  .reveal.from-l{translate:-32px 0}
+  .reveal.from-r{translate:32px 0}
+  .reveal.pop{translate:0 18px;scale:.95;rotate:-1.5deg}
   .reveal.in{opacity:1;translate:0 0}
+  .reveal.pop.in{scale:1;rotate:0deg}
   .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+  .reveal.done{transition:transform .25s, box-shadow .25s, background .3s, border-color .3s;transition-delay:0s}
+
+  /* follows the scroll both ways; JS sets opacity and translate */
+  .scrub{transition:opacity .35s ease-out, translate .5s var(--ease), rotate .5s var(--ease), background .3s, border-color .3s}
+
+  /* hero title, word by word */
+  .hero h1.split{opacity:1;translate:none}
+  .w{display:inline-block;opacity:0;translate:0 .4em;rotate:1.5deg;transition:opacity .7s ease, translate .9s var(--ease), rotate .9s var(--ease);transition-delay:calc(var(--i)*80ms + .1s)}
+  .split.in .w{opacity:1;translate:0 0;rotate:0deg}
+
+  /* hand-drawn underline on highlighted words */
+  .has-scribble{position:relative;display:inline-block}
+  .scribble{position:absolute;left:0;bottom:-.08em;width:100%;height:.2em;overflow:visible;pointer-events:none;clip-path:inset(-60% 100% -60% 0);transition:clip-path 1s ease-in-out .5s}
+  .scribble path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.55}
+  .in .scribble{clip-path:inset(-60% 0 -60% 0)}
+
+  /* gentle rock every few seconds */
+  @keyframes rock{0%,70%,100%{rotate:0deg}78%{rotate:1.6deg}86%{rotate:-1.6deg}94%{rotate:.6deg}}
+  .rock{animation:rock 7s ease-in-out infinite}
+  .rock:hover{animation-play-state:paused}
 
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .reveal{opacity:1;translate:none}
+    .stack>:first-child{position:relative}
+    .reveal,.reveal.from-l,.reveal.from-r,.reveal.pop{opacity:1;translate:none;scale:none;rotate:none}
+    .w{opacity:1;translate:none;rotate:none}
+    .mv__marquee{-webkit-mask-image:none;mask-image:none}
+    .mv__grid{width:auto;flex-wrap:wrap;justify-content:center;gap:1.5rem}
+    .mv__card{margin-right:0}
+    .mv__card[aria-hidden]{display:none}
+    .svc__tags span{opacity:1;translate:none;scale:none}
+    .scribble{clip-path:none}
     .draw path{stroke-dashoffset:0}
   }
 
@@ -289,32 +386,34 @@
     .nav__links,.nav__bar>.btn{display:none}
     .nav__toggle{display:block}
     .nav__mobile{display:grid;gap:.2rem;background:#fff;border:2px solid var(--purple);border-radius:28px;margin-top:.6rem;padding:0 1.4rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s, opacity .3s, padding .35s}
-    .nav.open .nav__mobile{max-height:420px;opacity:1;padding:1rem 1.4rem 1.4rem}
+    .nav.open .nav__mobile{max-height:520px;opacity:1;padding:1rem 1.4rem 1.4rem}
     .nav__mobile a{padding:.6rem 0;font-weight:600;border-bottom:1px solid #eee}
     .nav__mobile .btn{margin-top:.8rem;border-bottom:2px solid var(--purple)}
     .nav.open .nav__toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
     .nav.open .nav__toggle span:nth-child(2){opacity:0}
     .nav.open .nav__toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-    .hero__grid,.about__grid,.philo__grid,.culture__grid,.partner__box{grid-template-columns:1fr}
+    .hero__grid,.about__grid,.philo__grid,.culture__grid,.partner__box,.biz__box{grid-template-columns:1fr}
     .hero__art{max-width:400px}
     .culture__side{position:static}
-    .loc__grid{grid-template-columns:repeat(2,1fr)}
     .foot__grid{grid-template-columns:1fr 1fr}
     .foot__grid>div:first-child{grid-column:1/-1}
     .partner__art{justify-self:start;rotate:0deg;aspect-ratio:16/10!important;width:100%!important}
     .social__grid{grid-template-columns:repeat(3,1fr)}
+    .stats{grid-template-rows:none}
+    .stats__photo{aspect-ratio:16/10;min-height:0}
   }
   @media (max-width:720px){
-    .ps__grid,.mv__grid{grid-template-columns:1fr}
+    .ps__grid,.loc__grid,.svc__grid{grid-template-columns:1fr}
     .ps__arrow{top:50%;rotate:90deg}
     .nav__logo img{height:30px}
     .sticker--a{left:0}.sticker--b{right:0}
     .badge-spin{width:92px;height:92px}
     .value p{padding-left:1.4rem}
     .mv__card{min-height:auto;gap:2rem}
+    .gallery__track{--cw:58vw}
   }
   @media (max-width:480px){
-    .loc__grid,.stats{grid-template-columns:1fr}
+    .loc__grid,.stats,.biz__list{grid-template-columns:1fr}
     .foot__grid{grid-template-columns:1fr}
     .hero__ctas .btn{width:100%}
     .town{min-height:auto}
@@ -326,8 +425,8 @@
 <!-- Announcement -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
-    <span>Ticul</span><span>Oxkutzcab</span><span>Maní</span><span>Peto</span><span>Análisis para tu bienestar</span><span>Resultados confiables</span><span>Trato humano</span>
-    <span>Ticul</span><span>Oxkutzcab</span><span>Maní</span><span>Peto</span><span>Análisis para tu bienestar</span><span>Resultados confiables</span><span>Trato humano</span>
+    <span>Ticul</span><span>Oxkutzcab</span><span>Peto</span><span>Análisis para tu bienestar</span><span>Resultados confiables</span><span>Trato humano</span>
+    <span>Ticul</span><span>Oxkutzcab</span><span>Peto</span><span>Análisis para tu bienestar</span><span>Resultados confiables</span><span>Trato humano</span>
   </div>
 </div>
 
@@ -337,9 +436,11 @@
     <a href="#inicio" class="nav__logo" aria-label="Inovalab inicio"><img src="assets/inovalab-logo.png" alt="Inovalab · análisis para tu bienestar"></a>
     <nav class="nav__links" aria-label="Principal">
       <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
       <a href="#filosofia">Filosofía</a>
       <a href="#cultura">Cultura</a>
       <a href="#sucursales">Sucursales</a>
+      <a href="#empresas">Empresas</a>
       <a href="#alianzas">Alianzas</a>
     </nav>
     <a href="#sucursales" class="btn btn--primary">Agenda tu estudio</a>
@@ -347,24 +448,27 @@
   </div>
   <div class="nav__mobile">
     <a href="#nosotros">Nosotros</a>
+    <a href="#servicios">Servicios</a>
     <a href="#filosofia">Filosofía</a>
     <a href="#cultura">Cultura</a>
     <a href="#sucursales">Sucursales</a>
+    <a href="#empresas">Empresas</a>
     <a href="#alianzas">Alianzas</a>
     <a href="#sucursales" class="btn btn--primary">Agenda tu estudio</a>
   </div>
 </header>
 
 <main>
-<!-- Hero -->
+<!-- Hero stays pinned while the purple section slides over it -->
+<div class="stack">
 <section class="hero" id="inicio">
   <div class="wrap hero__grid">
     <div>
-      <span class="eyebrow reveal">Laboratorio de análisis clínicos · Yucatán</span>
-      <h1 class="display reveal d1">La salud <span class="outline">debería</span><br><span class="pink">sentirse</span> diferente.</h1>
+      <span class="eyebrow reveal">Análisis clínicos y ultrasonido · Yucatán</span>
+      <h1 class="display reveal split">La salud <span class="outline">debería</span><br><span class="pink">sentirse</span> diferente.</h1>
       <p class="hero__lead reveal d2">En Inovalab combinamos ciencia, tecnología y trato humano para que realizarte un estudio sea una experiencia tranquila, cercana y acompañada.</p>
       <div class="hero__ctas reveal d3">
-        <a href="#sucursales" class="btn btn--primary">
+        <a href="#sucursales" class="btn btn--primary rock">
           Encuentra tu sucursal
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -391,7 +495,7 @@
         <path style="--len:200" d="M50 170l14 14 14-14 14 14 14-14" stroke="#fff" stroke-width="5"/>
       </svg>
       <div class="sticker sticker--a"><b>+5,000</b>pacientes<br>atendidos</div>
-      <div class="sticker sticker--b"><b>4</b>sucursales<br>en Yucatán</div>
+      <div class="sticker sticker--b"><b>3</b>sucursales<br>en Yucatán</div>
       <svg class="badge-spin" viewBox="0 0 120 120">
         <circle cx="60" cy="60" r="58" fill="#DD1FD6" stroke="#721F86" stroke-width="3"/>
         <defs><path id="circ" d="M60 60m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs>
@@ -414,14 +518,14 @@
     </div>
     <div class="ps__wrap">
       <div class="ps__grid">
-        <article class="card card--before reveal">
+        <article class="card card--before reveal from-l">
           <span class="eyebrow" style="color:var(--blush)">El problema</span>
           <h3 class="display" style="margin-top:.8rem">Así se sentía antes</h3>
           <p>Durante muchos años los servicios de diagnóstico se han vivido en espacios fríos, impersonales y poco agradables.</p>
           <p>Muchas personas sienten ansiedad o incomodidad al realizarse estudios.</p>
           <div class="tags"><span>Frío</span><span>Impersonal</span><span>Ansiedad</span><span>Incomodidad</span></div>
         </article>
-        <article class="card card--after reveal d1">
+        <article class="card card--after reveal from-r d1">
           <span class="eyebrow" style="color:var(--magenta)">La solución</span>
           <h3 class="display" style="margin-top:.8rem">Así se siente en Inovalab</h3>
           <p>Creamos <strong>Inovalab</strong> para transformar la experiencia de cuidar la salud.</p>
@@ -434,6 +538,7 @@
     </div>
   </div>
 </section>
+</div>
 <div class="values-band" aria-hidden="true">
   <div class="values-band__track">
     <span>Calidad</span><span>Humanidad</span><span>Desarrollo</span><span>Amor</span><span>Excelencia</span><span>Calidad</span><span>Humanidad</span><span>Desarrollo</span><span>Amor</span><span>Excelencia</span>
@@ -449,7 +554,7 @@
         <span class="eyebrow reveal">Así se vive Inovalab</span>
         <h2 class="display reveal d1">Momentos que se <span>sienten</span> diferente</h2>
       </div>
-      <p class="reveal d2" style="max-width:380px;color:#3d3044">Desliza para ver cómo te recibimos en cada sucursal.</p>
+      <p class="reveal d2" style="max-width:380px;color:#3d3044">Así te recibimos en cada sucursal.</p>
     </div>
     <!-- Reemplaza cada .ph__inner por <img src="assets/galeria-1.jpg" alt="..."> (o un .gif / <video autoplay muted loop playsinline>) -->
     <div class="gallery__track reveal d2">
@@ -458,6 +563,10 @@
       <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Tecnología del laboratorio</span><span class="ph__spec">Equipo de análisis, detalle · 4:5</span></div></figure>
       <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Entrega de resultados</span><span class="ph__spec">Paciente recibiendo resultados en el celular · 4:5</span></div></figure>
       <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Espacios de la sucursal</span><span class="ph__spec">Sala de espera con la decoración morada · 4:5</span></div></figure>
+    </div>
+    <div class="gallery__nav reveal d3">
+      <button type="button" data-dir="-1" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" data-dir="1" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </div>
 </section>
@@ -476,10 +585,43 @@
     </div>
     <div class="stats">
       <p class="stats__title reveal">Hoy, nuestros resultados nos respaldan</p>
-      <div class="stat reveal"><span class="stat__num" data-count="4">0</span><span class="stat__label">sucursales en operación</span></div>
-      <div class="stat reveal d1"><span class="stat__num" data-count="5000" data-prefix="+">0</span><span class="stat__label">pacientes atendidos</span></div>
-      <div class="stat reveal d2"><span class="stat__num" data-count="25" data-suffix="%">0</span><span class="stat__label">crecimiento anual sostenido</span></div>
-      <div class="stat reveal d3"><span class="stat__num" data-count="8000" data-prefix="+">0</span><span class="stat__label">personas en nuestra comunidad</span></div>
+      <div class="stat reveal pop"><span class="stat__num" data-count="3">0</span><span class="stat__label">sucursales en operación</span></div>
+      <div class="stat reveal pop d1"><span class="stat__num" data-count="5000" data-prefix="+">0</span><span class="stat__label">pacientes atendidos</span></div>
+      <div class="stat reveal pop d2"><span class="stat__num" data-count="25" data-suffix="%">0</span><span class="stat__label">crecimiento anual sostenido</span></div>
+      <div class="stat reveal pop d3"><span class="stat__num" data-count="8000" data-prefix="+">0</span><span class="stat__label">personas en nuestra comunidad</span></div>
+      <!-- FOTO COMUNIDAD: reemplaza .ph__inner por <img src="assets/comunidad.jpg" alt="Familia Soy Inovalab"> -->
+      <figure class="ph stats__photo reveal d2" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto comunidad</span><span class="ph__title">Familia Soy Inovalab: pacientes y equipo, gente real</span><span class="ph__spec">Horizontal, ambiente alegre · 1600×1000 px</span></div></figure>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="svc" id="servicios">
+  <div class="wrap">
+    <div class="svc__head">
+      <span class="eyebrow reveal">Servicios</span>
+      <h2 class="display reveal d1">Lo que hacemos <span>por ti</span></h2>
+    </div>
+    <div class="svc__grid">
+      <article class="svc__card svc__card--main reveal pop">
+        <h3>Análisis clínicos</h3>
+        <div class="svc__tags"><span>Generales</span><span>De especialidad</span><span>Genética</span><span>Pruebas de paternidad</span><span>Tamiz neonatal</span><span>Antidoping</span></div>
+      </article>
+      <article class="svc__card reveal pop">
+        <h3>Ultrasonido</h3>
+        <p>Disponible en nuestra sucursal de Ticul.</p>
+        <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20ultrasonido%20en%20Ticul" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
+      </article>
+      <article class="svc__card reveal pop d1">
+        <h3>Hasta donde estés</h3>
+        <p>Servicio a domicilio en Ticul, Oxkutzcab, Maní, Mérida y sus alrededores.</p>
+        <a href="#mapa">Ver en el mapa <span>→</span></a>
+      </article>
+      <article class="svc__card reveal pop d2">
+        <h3>Para empresas</h3>
+        <p>Convenios, paquetes corporativos, jornadas de salud y programas anuales.</p>
+        <a href="#empresas">Conoce Inovalab Empresas <span>→</span></a>
+      </article>
     </div>
   </div>
 </section>
@@ -495,7 +637,7 @@
       <!-- GIF FILOSOFÍA: reemplaza .ph__inner por <img src="assets/filosofia.gif" alt="..."> o <video autoplay muted loop playsinline src="assets/filosofia.mp4"></video> -->
       <figure class="ph reveal d3" data-kind="gif" style="aspect-ratio:16/9;margin-top:2rem;border-radius:28px 28px 28px 8px"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Abrazo o sonrisa de un paciente al salir</span><span class="ph__spec">Loop 3–6 s, cámara lenta · 16:9</span></div></figure>
     </div>
-    <figure class="philo__quote reveal d2">
+    <figure class="philo__quote reveal from-r d2">
       <span class="qmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M4 18v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7H4zm9 0v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7h-7z"/></svg></span>
       <blockquote>Porque cuando estás <em>bien por dentro</em>, se refleja en todo.</blockquote>
       <cite>— Filosofía Inovalab</cite>
@@ -504,21 +646,24 @@
 </section>
 <svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleY(-1)"><path fill="#F6F2F7" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 
-<!-- Mission / Vision -->
+<!-- Mission / Vision stays pinned while Culture slides over it -->
+<div class="stack">
 <section class="mv">
-  <div class="wrap mv__grid">
-    <article class="mv__card mv__card--m reveal">
+  <div class="mv__marquee reveal">
+  <div class="mv__grid">
+    <article class="mv__card mv__card--m">
       <span class="num">01</span>
       <h3 class="display">Misión</h3>
       <p>Hacer que cuidar tu salud se sienta mejor.</p>
       <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M85 140c-48-28-68-52-60-78 7-22 37-27 52-6l8 11 8-11c15-21 45-16 52 6 8 26-12 50-60 78z" stroke="#F7C9F3" stroke-width="8"/></svg>
     </article>
-    <article class="mv__card mv__card--v reveal d1">
+    <article class="mv__card mv__card--v">
       <span class="num">02</span>
       <h3 class="display">Visión</h3>
       <p>Inspirar una nueva cultura de salud consciente.</p>
       <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M30 120c20-30 40 10 60-20s40 10 60-20M60 50l10-30M90 60l26-16M40 66l-18-22" stroke="#D94FD8" stroke-width="7"/></svg>
     </article>
+  </div>
   </div>
 </section>
 
@@ -527,21 +672,22 @@
 <section class="culture" id="cultura">
   <div class="wrap culture__grid">
     <div class="culture__side">
-      <span class="eyebrow reveal">Lo que nos mueve</span>
-      <h2 class="display reveal d1">Puntos de <span>cultura</span></h2>
-      <p class="culture__intro reveal d2">Cinco principios que viven en cada toma de muestra, en cada resultado y en cada sonrisa al recibirte.</p>
+      <span class="eyebrow scrub">Lo que nos mueve</span>
+      <h2 class="display scrub">Puntos de <span>cultura</span></h2>
+      <p class="culture__intro scrub">Cinco principios que viven en cada toma de muestra, en cada resultado y en cada sonrisa al recibirte.</p>
       <!-- GIF CULTURA: reemplaza .ph__inner por <img src="assets/cultura.gif" alt="..."> -->
-      <figure class="ph ph--dark reveal d3" data-kind="gif" style="aspect-ratio:1;max-width:360px;margin-top:2rem"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Equipo haciendo un corazón con las manos</span><span class="ph__spec">Loop corto, divertido · 1:1, 800×800</span></div></figure>
+      <figure class="ph ph--dark scrub" data-kind="gif" style="aspect-ratio:1;max-width:360px;margin-top:2rem"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Equipo haciendo un corazón con las manos</span><span class="ph__spec">Loop corto, divertido · 1:1, 800×800</span></div></figure>
     </div>
     <div class="values">
-      <details class="value reveal" open><summary><span class="value__n">01</span><span class="value__t">Calidad</span><span class="value__plus" aria-hidden="true">+</span></summary><p>La calidad no se negocia, se vive en cada detalle.</p></details>
-      <details class="value reveal d1"><summary><span class="value__n">02</span><span class="value__t">Humanidad</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Vemos, escuchamos y sentimos a cada persona. Aquí todos somos importantes.</p></details>
-      <details class="value reveal d1"><summary><span class="value__n">03</span><span class="value__t">Desarrollo</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Evolucionamos constantemente para ofrecer una mejor experiencia, un mejor servicio y un mejor cuidado.</p></details>
-      <details class="value reveal d2"><summary><span class="value__n">04</span><span class="value__t">Amor</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Servimos desde el corazón.</p></details>
-      <details class="value reveal d2"><summary><span class="value__n">05</span><span class="value__t">Excelencia</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Elevamos el estándar en cada proceso, en cada interacción y en cada resultado.</p></details>
+      <details class="value scrub" open><summary><span class="value__n">01</span><span class="value__t">Calidad</span><span class="value__plus" aria-hidden="true">+</span></summary><p>La calidad no se negocia, se vive en cada detalle.</p></details>
+      <details class="value scrub"><summary><span class="value__n">02</span><span class="value__t">Humanidad</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Vemos, escuchamos y sentimos a cada persona. Aquí todos somos importantes.</p></details>
+      <details class="value scrub"><summary><span class="value__n">03</span><span class="value__t">Desarrollo</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Evolucionamos constantemente para ofrecer una mejor experiencia, un mejor servicio y un mejor cuidado.</p></details>
+      <details class="value scrub"><summary><span class="value__n">04</span><span class="value__t">Amor</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Servimos desde el corazón.</p></details>
+      <details class="value scrub"><summary><span class="value__n">05</span><span class="value__t">Excelencia</span><span class="value__plus" aria-hidden="true">+</span></summary><p>Elevamos el estándar en cada proceso, en cada interacción y en cada resultado.</p></details>
     </div>
   </div>
 </section>
+</div>
 <svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleY(-1)"><path fill="#721F86" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 
 <!-- Locations -->
@@ -552,34 +698,64 @@
         <span class="eyebrow reveal">Sucursales</span>
         <h2 class="display reveal d1">Estamos <span>cerca</span> de ti</h2>
       </div>
-      <p class="reveal d2">Cuatro sucursales en el sur de Yucatán, listas para recibirte con la calidez que mereces. Escríbenos y agenda tu estudio.</p>
+      <p class="reveal d2">Tres sucursales en el sur de Yucatán y servicio hasta donde estés. Agenda por WhatsApp; tus resultados llegan por la tarde vía WhatsApp o en físico si lo prefieres.</p>
+    </div>
+    <div class="loc__map reveal" id="mapa" role="region" aria-label="Mapa de sucursales y zonas de servicio a domicilio"></div>
+    <div class="loc__legend reveal">
+      <span><svg viewBox="43 48 34 28"><path fill="#DD1FD6" stroke="#fff" stroke-width="1.5" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Servicio a domicilio y alrededores</span>
+      <span><svg viewBox="0 0 24 24"><path fill="#721F86" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>Sucursal</span>
+      <span><svg viewBox="0 0 24 24"><path fill="#721F86" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Sucursal con servicio a domicilio</span>
     </div>
     <div class="loc__grid">
-      <!-- TODO: reemplazar el número de WhatsApp (52XXXXXXXXXX) y los enlaces de Maps por los reales de cada sucursal -->
-      <article class="town reveal">
+      <article class="town reveal pop">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Ticul</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
-        <div><h3>Ticul</h3><small>Yucatán, México</small></div>
-        <a href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%20Ticul%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+        <div><h3>Ticul</h3><small>Calle 28 x 27 y 29, Centro</small><small>L–S 7:00 am a 7:30 pm · D 7:00 am a 1:00 pm</small></div>
+        <div class="town__links">
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Ticul%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+          <a href="https://maps.app.goo.gl/VWRM7dNx7rCB385P8" target="_blank" rel="noopener">Cómo llegar →</a>
+        </div>
       </article>
-      <article class="town reveal d1">
+      <article class="town reveal pop d1">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Oxkutzcab</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
-        <div><h3>Oxkutzcab</h3><small>Yucatán, México</small></div>
-        <a href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%20Oxkutzcab%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+        <div><h3>Oxkutzcab</h3><small>Calle 52 x 47 y 49, Centro</small></div>
+        <div class="town__links">
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Oxkutzcab%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+          <a href="https://share.google/mQWrpxOisLAjBNYnq" target="_blank" rel="noopener">Cómo llegar →</a>
+        </div>
       </article>
-      <article class="town reveal d2">
-        <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Maní</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
-        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
-        <div><h3>Maní</h3><small>Yucatán, México</small></div>
-        <a href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%20Man%C3%AD%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
-      </article>
-      <article class="town reveal d3">
+      <article class="town reveal pop d2">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Peto</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
-        <div><h3>Peto</h3><small>Yucatán, México</small></div>
-        <a href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%20Peto%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+        <div><h3>Peto</h3><small>Calle 35 x 32 y 34, Centro</small></div>
+        <div class="town__links">
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Peto%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
+          <a href="https://share.google/lNYpVdPl3ni6xdniT" target="_blank" rel="noopener">Cómo llegar →</a>
+        </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- Business -->
+<section class="biz" id="empresas">
+  <div class="wrap">
+    <div class="biz__box reveal">
+      <div>
+        <span class="eyebrow">Inovalab Empresas</span>
+        <h2 class="display">Tu equipo es el <span>motor</span> de tu empresa</h2>
+        <p>Su salud también es una inversión. Acercamos estudios de laboratorio a empresas, comercios, hoteles, restaurantes, industrias, instituciones educativas y oficinas de cualquier tamaño.</p>
+        <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20una%20propuesta%20para%20mi%20empresa" class="btn btn--light" target="_blank" rel="noopener">Solicita tu propuesta
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <ul class="biz__list">
+        <li><b>Convenio empresarial</b>Descuentos o tarifas preferenciales para colaboradores.</li>
+        <li><b>Paquete corporativo</b>Precios especiales sujetos al volumen y a los estudios seleccionados.</li>
+        <li><b>Jornada empresarial</b>Toma de muestras en las instalaciones, previa coordinación.</li>
+        <li><b>Programa anual</b>Planeación de campañas o servicios periódicos de salud.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -592,7 +768,7 @@
         <span class="eyebrow">Alianzas estratégicas</span>
         <h2 class="display" style="margin-top:1rem">Crece con nosotros en el sector salud</h2>
         <p>Expandimos nuestro modelo a través de alianzas, permitiendo que más emprendedores formen parte de este crecimiento y acerquen diagnóstico de calidad a más personas.</p>
-        <a href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%2C%20me%20interesa%20conocer%20el%20modelo%20de%20alianzas" class="btn btn--light" target="_blank" rel="noopener">Quiero ser aliado
+        <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20me%20interesa%20conocer%20el%20modelo%20de%20alianzas" class="btn btn--light" target="_blank" rel="noopener">Quiero ser aliado
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
@@ -617,7 +793,7 @@
       <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__title">Promoción del mes</span></div></figure>
       <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__title">Testimonio</span></div></figure>
     </div>
-    <div class="social__cta reveal d3"><a href="#" class="btn btn--ghost">Síguenos en Instagram</a></div>
+    <div class="social__cta reveal d3"><a href="https://www.instagram.com/soyinovalab/" class="btn btn--ghost" target="_blank" rel="noopener">Síguenos en Instagram</a></div>
   </div>
 </section>
 </main>
@@ -634,35 +810,42 @@
         <h4>Explora</h4>
         <ul>
           <li><a href="#nosotros">Quiénes somos</a></li>
+          <li><a href="#servicios">Servicios</a></li>
           <li><a href="#filosofia">Filosofía</a></li>
           <li><a href="#cultura">Puntos de cultura</a></li>
+          <li><a href="#empresas">Empresas</a></li>
           <li><a href="#alianzas">Alianzas</a></li>
         </ul>
       </div>
       <div>
         <h4>Sucursales</h4>
         <ul>
-          <li>Ticul</li><li>Oxkutzcab</li><li>Maní</li><li>Peto</li>
+          <li>Ticul</li><li>Oxkutzcab</li><li>Peto</li>
         </ul>
-        <!-- TODO: enlaces reales de redes sociales -->
+        <h4 style="margin-top:1.6rem">Contacto</h4>
+        <ul>
+          <li><a href="tel:+529971251007">997 125 1007</a></li>
+          <li><a href="mailto:facturacion.inovalab@gmail.com">facturacion.inovalab@gmail.com</a></li>
+        </ul>
+        <!-- TODO: enlace real de Facebook -->
         <div class="socials">
           <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.6 10 6.2V8H8v3.2h2V22h4V11.2h2.7L17 8h-3z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.2 1.8 3.6 4 3.9v3.2c-1.5 0-2.9-.5-4-1.2v6.3c0 3.4-2.6 5.8-5.8 5.8S5 18.6 5 15.3c0-3.5 3-6 6.5-5.6v3.3c-1.6-.4-3.2.7-3.2 2.3 0 1.4 1.1 2.4 2.5 2.4s2.5-1 2.5-2.6V3h3.3z"/></svg></a>
+          <a href="https://www.instagram.com/soyinovalab/" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
         </div>
       </div>
     </div>
     <div class="foot__bottom">
       <span>© <span id="yr">2026</span> Inovalab · Análisis para tu bienestar</span>
-      <span>Ticul · Oxkutzcab · Maní · Peto — Yucatán</span>
+      <span>Ticul · Oxkutzcab · Peto — Yucatán</span>
     </div>
   </div>
 </footer>
 
-<a class="wa" href="https://wa.me/52XXXXXXXXXX?text=Hola%20Inovalab%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+<a class="wa rock" href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
   <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>
 </a>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // mobile menu
   const nav = document.getElementById('nav');
@@ -675,8 +858,42 @@
     nav.classList.remove('open'); toggle.setAttribute('aria-expanded', false);
   }));
 
+  // mission & vision ribbon: four sets, so half the track always covers the screen
+  const ribbon = document.querySelector('.mv__grid');
+  const ribbonCards = [...ribbon.children];
+  for (let i = 0; i < 3; i++) ribbonCards.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    ribbon.append(clone);
+  });
+
+  // hero title: wrap each word so it can rise on its own
+  let wordIndex = 0;
+  const splitWords = node => [...node.childNodes].forEach(child => {
+    if (child.nodeType !== 3) return splitWords(child);
+    const frag = document.createDocumentFragment();
+    child.textContent.split(/(\s+)/).forEach(part => {
+      if (!part.trim()) return frag.append(part);
+      const w = document.createElement('span');
+      w.className = 'w';
+      w.style.setProperty('--i', wordIndex++);
+      w.textContent = part;
+      frag.append(w);
+    });
+    child.replaceWith(frag);
+  });
+  document.querySelectorAll('.split').forEach(splitWords);
+
+  document.querySelectorAll('.svc__tags span').forEach((tag, i) => tag.style.setProperty('--i', i));
+
+  // highlighted words in section titles get a hand-drawn underline
+  document.querySelectorAll('h2.display span').forEach(s => {
+    s.classList.add('has-scribble');
+    s.insertAdjacentHTML('beforeend', '<svg class="scribble" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7c40-6 72 5 112 1s70-6 84 0"/></svg>');
+  });
+
   // reveal on scroll + counters
-  const fmt = n => n.toLocaleString('es-MX');
+  const fmt =n => n.toLocaleString('es-MX');
   const countUp = el => {
     const target = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
     const t0 = performance.now(), dur = 1600;
@@ -692,18 +909,123 @@
       if (!en.isIntersecting) return;
       en.target.classList.add('in');
       en.target.querySelectorAll('[data-count]').forEach(countUp);
+      setTimeout(() => en.target.classList.add('done'), 1400); // hands transitions back to hover
       io.unobserve(en.target);
     });
   }, { threshold: .15 });
   // ?static muestra todo sin animación (útil para capturas de revisión)
-  if (location.search.includes('static')) document.documentElement.style.setProperty('--static', 1), document.querySelectorAll('.reveal').forEach(el => { el.style.transition = 'none'; el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(c => c.textContent = (c.dataset.prefix || '') + fmt(+c.dataset.count) + (c.dataset.suffix || '')); });
-  else document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  if (location.search.includes('static')) document.documentElement.style.setProperty('--static', 1), document.querySelectorAll('.reveal, .scrub').forEach(el => { el.style.transition = 'none'; el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(c => c.textContent = (c.dataset.prefix || '') + fmt(+c.dataset.count) + (c.dataset.suffix || '')); });
+  else document.querySelectorAll('.reveal, .scrub').forEach(el => io.observe(el));
 
   // accordion: keep one value open at a time
   const vals = document.querySelectorAll('.value');
   vals.forEach(d => d.addEventListener('toggle', () => {
     if (d.open) vals.forEach(o => o !== d && (o.open = false));
   }));
+
+  // gallery carousel: only the arrows move it. Clones keep the wrap-around off screen
+  const track = document.querySelector('.gallery__track');
+  [...track.children].forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.append(clone);
+  });
+  const cards = [...track.children];
+  let current = 0;
+  const placeCards = () => cards.forEach((card, i) => {
+    const offset = (i - current + cards.length * 1.5) % cards.length - cards.length / 2;
+    card.style.setProperty('--o', offset);
+    card.classList.toggle('is-active', offset === 0);
+    card.classList.toggle('is-off', Math.abs(offset) > 2);
+  });
+  document.querySelectorAll('.gallery__nav button').forEach(btn => btn.addEventListener('click', () => {
+    current = (current + +btn.dataset.dir + cards.length) % cards.length;
+    placeCards();
+  }));
+  placeCards();
+
+  // coverage map: heart = home service, drop = branch, drop with heart = both
+  if (window.L) {
+    const heart = 'M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z';
+    const drop = inner => `<svg viewBox="0 0 24 24"><path fill="#721F86" stroke="#fff" stroke-width=".8" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/>${inner}</svg>`;
+    const icons = {
+      home: L.divIcon({ className: 'map-pin', iconSize: [36, 30], iconAnchor: [18, 29], popupAnchor: [0, -26], html: `<svg viewBox="43 48 34 28"><path fill="#DD1FD6" stroke="#fff" stroke-width="1.5" d="${heart}"/></svg>` }),
+      branch: L.divIcon({ className: 'map-pin', iconSize: [40, 40], iconAnchor: [20, 37], popupAnchor: [0, -32], html: drop('<circle cx="12" cy="9" r="2.6" fill="#fff"/>') }),
+      both: L.divIcon({ className: 'map-pin', iconSize: [40, 40], iconAnchor: [20, 37], popupAnchor: [0, -32], html: drop(`<path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="${heart}"/>`) })
+    };
+    const wa = 'https://wa.me/529971251007?text=';
+    const places = [
+      { name: 'Ticul', at: [20.3945996, -89.5362132], kind: 'both', side: 'left', addr: 'Calle 28 x 27 y 29, Centro', maps: 'https://maps.app.goo.gl/VWRM7dNx7rCB385P8' },
+      { name: 'Oxkutzcab', at: [20.304822, -89.4189584], kind: 'both', side: 'bottom', addr: 'Calle 52 x 47 y 49, Centro', maps: 'https://share.google/mQWrpxOisLAjBNYnq' },
+      { name: 'Peto', at: [20.1243796, -88.92481], kind: 'branch', side: 'top', addr: 'Calle 35 x 32 y 34, Centro', maps: 'https://share.google/lNYpVdPl3ni6xdniT' },
+      { name: 'Maní', at: [20.3867, -89.3919], kind: 'home', side: 'right' },
+      { name: 'Mérida', at: [20.9674, -89.5926], kind: 'home', side: 'right' }
+    ];
+    const map = L.map('mapa', { scrollWheelZoom: false, dragging: !L.Browser.mobile, attributionControl: false, zoomSnap: .25 });
+    L.control.attribution({ prefix: false }).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+    const pulses = [];
+    places.forEach(p => {
+      const home = p.kind !== 'branch';
+      if (home) {
+        L.circle(p.at, { radius: 12000, color: '#DD1FD6', weight: 1.5, fillColor: '#DD1FD6', fillOpacity: .14, interactive: false }).addTo(map);
+        pulses.push(L.circle(p.at, { radius: 12000, color: '#DD1FD6', weight: 2, fillColor: '#DD1FD6', fillOpacity: .22, interactive: false, className: 'map-pulse' }).addTo(map));
+      }
+      const title = p.addr ? 'Sucursal' + (home ? ' y servicio a domicilio' : '') : 'Servicio a domicilio y alrededores';
+      const links = (p.maps ? `<a href="${p.maps}" target="_blank" rel="noopener">Cómo llegar →</a>` : '') +
+        `<a href="${wa}${encodeURIComponent(`Hola Inovalab ${p.name}, quiero agendar un estudio`)}" target="_blank" rel="noopener">Agendar por WhatsApp →</a>`;
+      L.marker(p.at, { icon: icons[p.kind], title: p.name, zIndexOffset: p.addr ? 100 : 0 }).addTo(map)
+        .bindTooltip(p.name, { permanent: true, direction: p.side, offset: { top: [0, -36], bottom: [0, 2], left: [-16, -16], right: [16, -16] }[p.side] })
+        .bindPopup(`<b>${p.name}</b>${title}${p.addr ? `<br>${p.addr}` : ''}${links}`);
+    });
+    const fit = () => map.fitBounds(L.latLngBounds(places.map(p => p.at)), { paddingTopLeft: [70, 45], paddingBottomRight: [30, 35] });
+    map.on('resize', e => { if (e.newSize.x !== e.oldSize.x) fit(); });
+    fit();
+    pulses.forEach((c, i) => c.getElement().style.animationDelay = `${i * .8}s`); // each zone beats on its own
+  }
+
+  // waves drift sideways and the hero art shifts slightly with the scroll
+  if (!matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    const waves = document.querySelectorAll('.wave');
+    const photo = document.querySelector('.hero__photo');
+    const badge = document.querySelector('.badge-spin');
+    const navBar = document.getElementById('nav');
+    const stacks = [...document.querySelectorAll('.stack')].map(s => ({ pin: s.children[0], inner: s.children[0].firstElementChild, cover: s.children[1] }));
+    const scrubs = document.querySelectorAll('.scrub');
+    let ticking = false;
+    const update = () => {
+      const y = scrollY, period = waves[0].clientWidth / 9; // one wave = 160 of 1440 units
+      const x = -(y * .12 % period);
+      waves.forEach((w, i) => w.style.translate = `${i % 2 ? -period - x : x}px 0`);
+      // pinned sections rest under the nav (or by their bottom edge if taller than the screen)
+      // and fade as the next one covers them
+      stacks.forEach(({ pin, inner, cover }) => {
+        pin.style.setProperty('--pin-top', `${Math.min(navBar.offsetHeight + 12, innerHeight - pin.offsetHeight)}px`);
+        const top = cover.getBoundingClientRect().top;
+        const p = Math.min(Math.max(1 - top / Math.min(innerHeight, top + y), 0), 1);
+        inner.style.opacity = 1 - p * .7;
+        inner.style.scale = 1 - p * .05;
+      });
+      // scrubbed items appear as they enter the screen and leave the same way
+      scrubs.forEach(el => {
+        const o = Math.min(Math.max((innerHeight * .96 - el.getBoundingClientRect().top) / (innerHeight * .3), 0), 1);
+        const isValue = el.classList.contains('value');
+        el.style.opacity = o;
+        el.style.translate = isValue ? `${(1 - o) * 44}px 0` : `0 ${(1 - o) * 30}px`;
+        if (isValue) el.style.rotate = `${(1 - o) * 1.2}deg`;
+      });
+      if (y < 900) {
+        photo.style.translate = `0 ${y * .04}px`;
+        badge.style.translate = `0 ${y * -.05}px`;
+      }
+      ticking = false;
+    };
+    addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
