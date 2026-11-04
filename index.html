@@ -9,116 +9,112 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&icon_names=bloodtype,coronavirus,corporate_fare,diversity_3,favorite,groups,home_health,labs,location_on,monitor_heart,pregnant_woman,science,star,trending_up,water_drop&display=block" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   @font-face{font-family:"Cooper Lt BT";src:url("assets/cooper-lt-bt-bold.ttf") format("truetype");font-weight:100 900;font-display:swap}
   :root{
-    --purple:#721F86;
-    --purple-deep:#561466;
-    --magenta:#DD1FD6;
-    --orchid:#D94FD8;
-    --lilac:#B06BC4;
-    --blush:#F7C9F3;
-    --navy:#003A8C;
-    --paper:#ECECEC;
-    --cream:#F6F2F7;
-    --ink:#1B1220;
+    --navy:#103587;
+    --blue:#1626b7;
+    --magenta:#cc33cc;
+    --white:#ffffff;
     --radius:28px;
-    --wave-h:28px;
+    --section-r:clamp(32px,5vw,64px);
     --ease:cubic-bezier(.22,1,.36,1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;overflow-x:clip}
-  body{font-family:"Poppins",system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+  body{font-family:"Poppins",system-ui,sans-serif;background:var(--white);color:var(--navy);line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
   img{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
   .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
   .display{font-family:"Cooper Lt BT",Impact,sans-serif;font-weight:400;line-height:1.08;letter-spacing:.01em;text-transform:uppercase}
-  .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
+  .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
   .eyebrow::before{content:"";width:28px;height:3px;border-radius:3px;background:currentColor}
 
   /* ---------- announcement marquee ---------- */
-  .ticker{background:var(--purple);color:#fff;font-weight:600;font-size:.85rem;overflow:hidden;white-space:nowrap;position:relative;z-index:30}
+  .ticker{background:var(--navy);color:#fff;font-weight:600;font-size:.85rem;overflow:hidden;white-space:nowrap;position:relative;z-index:30}
   .ticker__track{display:inline-flex;gap:2.5rem;padding:.55rem 0;animation:marquee 32s linear infinite}
   .ticker__track span{display:inline-flex;align-items:center;gap:2.5rem}
-  .ticker__track span::after{content:"♥";color:var(--orchid)}
+  .ticker__track span::after{content:"♥";color:var(--white)}
   @keyframes marquee{to{transform:translateX(-50%)}}
 
   /* ---------- nav ---------- */
   .nav{position:sticky;top:12px;z-index:40;margin-top:12px}
-  .nav__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border:2px solid var(--purple);border-radius:999px;padding:.55rem .6rem .55rem 1.4rem;box-shadow:0 6px 0 var(--purple)}
+  .nav__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--white);border:2px solid var(--navy);border-radius:999px;padding:.55rem .6rem .55rem 1.4rem;box-shadow:0 6px 0 var(--navy)}
   .nav__logo img{height:38px;width:auto}
   .nav__links{display:flex;gap:1.6rem;font-weight:500;font-size:.92rem}
   .nav__links a{position:relative}
   .nav__links a::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;background:var(--magenta);transition:width .25s}
   .nav__links a:hover::after{width:100%}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-weight:600;font-size:.95rem;border-radius:999px;padding:.85rem 1.5rem;border:2px solid var(--purple);transition:transform .2s, box-shadow .2s, background .2s;cursor:pointer;white-space:nowrap}
-  .btn--primary{background:var(--magenta);color:#fff;border-color:var(--purple);box-shadow:0 4px 0 var(--purple)}
-  .btn--primary:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--purple)}
-  .btn--ghost{background:transparent;color:var(--purple)}
-  .btn--ghost:hover{background:var(--purple);color:#fff}
-  .btn--light{background:#fff;color:var(--purple);border-color:#fff;box-shadow:0 4px 0 var(--purple-deep)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-weight:600;font-size:.95rem;border-radius:999px;padding:.85rem 1.5rem;border:2px solid var(--navy);transition:transform .2s, box-shadow .2s, background .2s;cursor:pointer;white-space:nowrap}
+  .btn--primary{background:var(--magenta);color:#fff;border-color:var(--navy);box-shadow:0 4px 0 var(--navy)}
+  .btn--primary:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--navy)}
+  .btn--blue{background:var(--blue);color:#fff;border-color:var(--white);box-shadow:0 4px 0 var(--navy)}
+  .btn--blue:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--navy)}
+  .btn--ghost{background:transparent;color:var(--navy)}
+  .btn--ghost:hover{background:var(--navy);color:#fff}
+  .btn--light{background:#fff;color:var(--navy);border-color:#fff;box-shadow:0 4px 0 var(--blue)}
   .btn--light:hover{transform:translateY(-2px)}
   .btn svg{width:18px;height:18px}
   .nav__toggle{display:none;background:none;border:0;width:44px;height:44px;border-radius:50%;cursor:pointer}
-  .nav__toggle span{display:block;width:22px;height:2px;background:var(--purple);margin:5px auto;transition:.3s}
+  .nav__toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px auto;transition:.3s}
   .nav__mobile{display:none}
 
   /* ---------- hero ---------- */
   .hero{padding:clamp(3rem,7vw,6rem) 0 clamp(4rem,8vw,7rem)}
   .stack>:first-child{position:sticky;top:var(--pin-top,0px);z-index:0}
   .stack>:nth-child(n+2){position:relative;z-index:1}
-  .hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center}
-  .hero h1{font-size:clamp(2.6rem,5.4vw,4.6rem);color:var(--purple);margin:1.1rem 0 1.4rem}
+  .hero__grid{display:grid;grid-template-columns:1fr 1.14fr;gap:clamp(2.5rem,4vw,4rem);align-items:center}
+  .hero h1{font-size:clamp(2.6rem,5.4vw,4.6rem);color:var(--navy);margin:1.1rem 0 1.4rem}
   .hero h1 .pink{color:var(--magenta)}
-  .hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--purple)}
-  .hero__lead{font-size:clamp(1.05rem,1.4vw,1.2rem);max-width:520px;color:#3d3044}
+  .hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--navy)}
+  .hero__lead{font-size:clamp(1.05rem,1.4vw,1.2rem);max-width:520px;color:#103587}
   .hero__ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
-  .hero__art{position:relative;aspect-ratio:1;max-width:480px;justify-self:center;width:100%}
-  .blob{position:absolute;inset:6%;background:var(--purple);border-radius:46% 54% 42% 58%/52% 44% 56% 48%;animation:morph 12s ease-in-out infinite}
+  .hero__art{position:relative;aspect-ratio:7/6;max-width:660px;justify-self:end;width:100%}
+  .blob{position:absolute;inset:6%;background:var(--navy);border-radius:46% 54% 42% 58%/52% 44% 56% 48%;animation:morph 12s ease-in-out infinite}
   @keyframes morph{50%{border-radius:58% 42% 55% 45%/42% 58% 42% 58%}}
-  .hero__art svg.doodle{position:absolute;inset:0;width:100%;height:100%}
-  .sticker{position:absolute;background:#fff;border:2px solid var(--purple);border-radius:20px;padding:.75rem 1rem;box-shadow:0 5px 0 var(--purple);font-weight:600;font-size:.85rem;line-height:1.25;display:flex;gap:.6rem;align-items:center}
+  .sticker{position:absolute;background:#fff;border:2px solid var(--navy);border-radius:20px;padding:.75rem 1rem;box-shadow:0 5px 0 var(--navy);font-weight:600;font-size:.85rem;line-height:1.25;display:flex;gap:.6rem;align-items:center}
   .sticker b{font-family:"Cooper Lt BT";font-size:1.5rem;font-weight:400;color:var(--magenta);line-height:1}
-  .sticker--a{left:-6%;bottom:12%;transform:rotate(-6deg);animation:float 6s ease-in-out infinite}
-  .sticker--b{right:-4%;top:8%;transform:rotate(5deg);animation:float 7s ease-in-out infinite reverse}
+  .sticker--a{left:-8%;bottom:-4%;transform:rotate(-6deg);animation:float 6s ease-in-out infinite}
+  .sticker--b{right:-3%;top:4%;transform:rotate(5deg);animation:float 7s ease-in-out infinite reverse}
   @keyframes float{50%{translate:0 -10px}}
-  .badge-spin{position:absolute;right:2%;bottom:-2%;width:120px;height:120px;animation:spin 18s linear infinite}
+  .badge-spin{position:absolute;right:1%;bottom:-3%;width:110px;height:110px;animation:spin 18s linear infinite}
   @keyframes spin{to{rotate:360deg}}
 
   .draw path{stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);animation:draw 2.4s ease forwards}
   @keyframes draw{to{stroke-dashoffset:0}}
 
   /* wavy edges */
-  .wave{display:block;width:112.5%;max-width:none;height:var(--wave-h)}
 
   /* ---------- problem / solution ---------- */
-  .ps{background:var(--purple);color:#fff;padding:clamp(4rem,8vw,7rem) 0;position:relative}
-  .ps .eyebrow{color:var(--blush)}
+  .ps{background:var(--navy);color:#fff;padding:clamp(4rem,8vw,7rem) 0;position:relative;border-radius:var(--section-r) var(--section-r) 0 0}
+  .ps::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3.5vw;background:var(--white);clip-path:polygon(100% 0,100% 100%,0 100%)} /* slants the bottom edge to run under the tilted band */
+  .ps .eyebrow{color:var(--white)}
   .ps__head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:3rem}
   .ps__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
-  .ps__head h2 span{color:var(--orchid)}
+  .ps__head h2 span{color:var(--white)}
   .ps__grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
   .card{border-radius:var(--radius);padding:clamp(1.8rem,3vw,2.6rem);position:relative;overflow:hidden}
   .card h3{font-size:clamp(1.6rem,2.6vw,2.2rem);margin-bottom:1rem}
   .card p{font-size:1.05rem}
   .card p+p{margin-top:.9rem}
-  .card--before{background:var(--purple-deep);border:2px dashed rgba(255,255,255,.35)}
-  .card--before h3{color:rgba(255,255,255,.75)}
+  .card--before{background:var(--blue);border:2px dashed var(--white)}
+  .card--before h3{color:var(--white)}
   .card--before .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
-  .card--before .tags span{border:1.5px solid rgba(255,255,255,.4);border-radius:999px;padding:.3rem .9rem;font-size:.85rem;text-decoration:line-through;text-decoration-color:var(--orchid);text-decoration-thickness:2px}
-  .card--after{background:var(--paper);color:var(--ink);box-shadow:0 8px 0 var(--orchid)}
-  .card--after h3{color:var(--purple)}
-  .card--after strong{color:var(--purple)}
+  .card--before .tags span{border:1.5px solid var(--white);border-radius:999px;padding:.3rem .9rem;font-size:.85rem;text-decoration:line-through;text-decoration-color:var(--white);text-decoration-thickness:2px}
+  .card--after{background:var(--white);color:var(--navy);box-shadow:0 8px 0 var(--blue)}
+  .card--after h3{color:var(--navy)}
+  .card--after strong{color:var(--navy)}
   .card--after .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
-  .card--after .tags span{background:var(--purple);color:#fff;border-radius:999px;padding:.3rem .9rem;font-size:.85rem;font-weight:500}
-  .card__dot{position:absolute;width:120px;height:120px;border-radius:50%;background:var(--orchid);right:-30px;bottom:-30px;opacity:.9}
+  .card--after .tags span{background:var(--navy);color:#fff;border-radius:999px;padding:.3rem .9rem;font-size:.85rem;font-weight:500}
+  .card__dot{position:absolute;width:120px;height:120px;border-radius:50%;background:var(--magenta);right:-30px;bottom:-30px}
   .ps__arrow{position:absolute;left:50%;top:50%;translate:-50% -50%;width:64px;height:64px;border-radius:50%;background:var(--magenta);border:3px solid #fff;display:grid;place-items:center;z-index:2}
   .ps__arrow svg{width:28px;height:28px}
   .ps__wrap{position:relative}
 
   /* ---------- values marquee ---------- */
-  .values-band{background:var(--magenta);color:#fff;overflow:hidden;white-space:nowrap;border-block:3px solid var(--purple);rotate:-2deg;margin:-1.6rem -2rem 0;position:relative;z-index:5}
+  .values-band{background:var(--magenta);color:#fff;overflow:hidden;white-space:nowrap;border-block:3px solid var(--navy);rotate:-2deg;margin:calc(-1.6rem - 1.75vw) -2rem 0;position:relative;z-index:5}
   .values-band__track{display:inline-flex;animation:marquee 26s linear infinite;padding:.9rem 0}
   .values-band__track span{font-family:"Cooper Lt BT";font-size:clamp(1.4rem,2.6vw,2.2rem);padding:0 1.4rem;display:inline-flex;align-items:center;gap:2.8rem;line-height:1}
   .values-band__track span::after{content:"";width:22px;height:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z'/%3E%3C/svg%3E") center/contain no-repeat}
@@ -126,106 +122,114 @@
   /* ---------- about ---------- */
   .about{padding:clamp(5rem,9vw,8rem) 0 clamp(4rem,7vw,6rem)}
   .about__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem)}
-  .about h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin:1rem 0 1.4rem}
+  .about h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin:1rem 0 1.4rem}
   .about h2 span{color:var(--magenta)}
-  .about__text p{font-size:1.05rem;color:#3d3044}
+  .about__text p{font-size:1.05rem;color:#103587}
   .about__text p+p{margin-top:1rem}
-  .about__since{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.8rem;background:#fff;border:2px solid var(--purple);border-radius:999px;padding:.45rem 1.1rem .45rem .45rem;font-weight:600;font-size:.92rem}
-  .about__since b{background:var(--purple);color:#fff;border-radius:999px;padding:.25rem .8rem;font-family:"Cooper Lt BT";font-weight:400;font-size:1.3rem;letter-spacing:.04em}
+  .about__since{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.8rem;background:#fff;border:2px solid var(--navy);border-radius:999px;padding:.45rem 1.1rem .45rem .45rem;font-weight:600;font-size:.92rem}
+  .about__since b{background:var(--navy);color:#fff;border-radius:999px;padding:.25rem .8rem;font-family:"Cooper Lt BT";font-weight:400;font-size:1.3rem;letter-spacing:.04em}
   .stats{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto 1fr;gap:1rem}
-  .stats__photo{grid-column:1/-1;min-height:240px;margin-top:.6rem;box-shadow:0 6px 0 var(--magenta)}
-  .stat{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);padding:1.6rem 1.4rem;box-shadow:0 6px 0 var(--purple);transition:transform .25s}
+  .stats__photo{grid-column:1/-1;min-height:240px;margin-top:.6rem;box-shadow:0 6px 0 var(--blue)}
+  .stat{background:#fff;border:2px solid var(--navy);border-radius:var(--radius);padding:1.6rem 1.4rem;box-shadow:0 6px 0 var(--navy);transition:transform .25s}
   .stat:hover{transform:translateY(-4px) rotate(-1deg)}
-  .stat:nth-child(2){background:var(--purple);color:#fff;box-shadow:0 6px 0 var(--magenta)}
-  .stat:nth-child(3){background:var(--blush)}
+  .stat:nth-child(2){background:var(--navy);color:#fff;box-shadow:0 6px 0 var(--blue)}
+  .stat:nth-child(3){background:var(--blue);color:var(--white)}
   .stat:nth-child(4){background:var(--magenta);color:#fff}
   .stat__num{font-family:"Cooper Lt BT";font-size:clamp(2.2rem,3.6vw,3rem);line-height:1;display:block}
-  .stat:nth-child(1) .stat__num,.stat:nth-child(3) .stat__num{color:var(--purple)}
+  .stat{position:relative}
+  .stat__ico{position:absolute;top:1.1rem;right:1.1rem;font-size:30px}
   .stat__label{font-weight:500;font-size:.95rem;margin-top:.4rem;display:block}
   .stats__title{grid-column:1/-1;font-weight:700;font-size:1.05rem;margin-bottom:.2rem;display:flex;align-items:center;gap:.6rem}
   .stats__title::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--magenta)}
 
   /* ---------- philosophy ---------- */
-  .philo{background:var(--cream);padding:clamp(4rem,8vw,7rem) 0;position:relative;overflow:hidden}
+  .philo{background:var(--white);padding:clamp(4rem,8vw,7rem) 0;position:relative;overflow:hidden}
   .philo__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
   .philo h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--magenta);margin:1rem 0 1.2rem}
-  .philo p{font-size:1.08rem;color:#3d3044}
-  .philo__quote{position:relative;background:var(--purple);color:#fff;border-radius:40px 40px 40px 8px;padding:clamp(2rem,4vw,3.2rem);box-shadow:10px 10px 0 var(--orchid)}
+  .philo p{font-size:1.08rem;color:#103587}
+  .philo__quote{position:relative;background:var(--navy);color:#fff;border-radius:40px 40px 40px 8px;padding:clamp(2rem,4vw,3.2rem);box-shadow:10px 10px 0 var(--blue)}
   .philo__quote blockquote{font-family:"Cooper Lt BT";font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.12}
-  .philo__quote blockquote em{font-style:normal;color:var(--blush)}
-  .philo__quote .qmark{position:absolute;top:-34px;left:28px;width:70px;height:70px;border-radius:50%;background:var(--magenta);display:grid;place-items:center;border:3px solid var(--cream)}
+  .philo__quote blockquote em{font-style:normal;color:var(--white);text-decoration:underline var(--magenta) 3px;text-underline-offset:.14em}
+  .philo__quote .qmark{position:absolute;top:-34px;left:28px;width:70px;height:70px;border-radius:50%;background:var(--magenta);display:grid;place-items:center;border:3px solid var(--white)}
   .philo__quote .qmark svg{width:30px}
-  .philo__quote cite{display:block;margin-top:1.4rem;font-style:normal;font-size:.9rem;opacity:.8}
+  .philo__side{display:flex;flex-direction:column;gap:2.6rem}
+  .philo__photos{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .philo__photos .ph{aspect-ratio:1;border:2px solid var(--navy);border-radius:20px;box-shadow:0 5px 0 var(--navy);padding:0;transition:rotate .4s var(--ease),translate .4s var(--ease)}
+  .philo__photos .ph:nth-child(1){rotate:-2deg}.philo__photos .ph:nth-child(3){rotate:2deg}
+  .philo__photos--bottom .ph:nth-child(1){rotate:2deg}.philo__photos--bottom .ph:nth-child(3){rotate:-2deg}
+  .philo__photos .ph:hover{rotate:0deg;translate:0 -5px}
+  .philo__quote cite{display:block;margin-top:1.4rem;font-style:normal;font-size:.9rem}
 
   /* ---------- mission / vision ---------- */
   .mv{padding:clamp(4rem,8vw,7rem) 0}
   .mv__marquee{overflow:hidden;padding-block:.4rem 1rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
   .mv__grid{display:flex;width:max-content;animation:marquee 90s linear infinite}
-  .mv__marquee:hover .mv__grid{animation-play-state:paused}
-  .mv__card{flex:0 0 clamp(300px,42vw,620px);margin-right:1.5rem;border-radius:var(--radius);padding:clamp(2rem,4vw,3.2rem);border:2px solid var(--purple);position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+  .mv__card{flex:0 0 clamp(300px,42vw,620px);margin-right:1.5rem;border-radius:var(--radius);padding:clamp(2rem,4vw,3.2rem);border:2px solid var(--navy);position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
   .mv__card h3{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--magenta)}
   .mv__card p{font-size:clamp(1.4rem,2.4vw,2rem);font-weight:500;line-height:1.25;max-width:440px}
-  .mv__card--m{background:#fff;box-shadow:0 8px 0 var(--purple)}
-  .mv__card--v{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 8px 0 var(--magenta)}
-  .mv__card--v h3{color:var(--blush)}
-  .mv__card .num{position:absolute;right:1.6rem;top:1.4rem;font-family:"Cooper Lt BT";font-size:1.2rem;letter-spacing:.1em;opacity:.55}
-  .mv__card svg.corner{position:absolute;right:-18px;top:-18px;width:150px;opacity:.9;pointer-events:none}
+  .mv__card--m{background:#fff;box-shadow:0 8px 0 var(--navy)}
+  .mv__card--v{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 8px 0 var(--navy)}
+  .mv__card--v h3{color:var(--white)}
+  .mv__card .num{position:absolute;right:1.6rem;top:1.4rem;font-family:"Cooper Lt BT";font-size:1.2rem;letter-spacing:.1em}
+  .mv__card svg.corner{position:absolute;right:-18px;top:-18px;width:150px;pointer-events:none}
   .mv__card .num{z-index:1}
 
   /* ---------- culture ---------- */
-  .culture{background:var(--purple);color:#fff;padding:clamp(4rem,8vw,7rem) 0}
+  .culture{background:var(--navy);color:#fff;padding:clamp(4rem,8vw,7rem) 0;border-radius:var(--section-r)}
   .culture__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,5vw,5rem);align-items:start}
   .culture h2{font-size:clamp(2.2rem,4.2vw,3.6rem);margin:1rem 0 1.2rem}
-  .culture h2 span{color:var(--orchid)}
-  .culture .eyebrow{color:var(--blush)}
-  .culture__intro{opacity:.85;max-width:380px}
+  .culture h2 span{color:var(--white)}
+  .culture .eyebrow{color:var(--white)}
+  .culture__intro{max-width:380px}
   .culture__side{position:sticky;top:120px}
   .values{display:flex;flex-direction:column;gap:.9rem}
-  .value{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.18);border-radius:var(--radius);transition:background .3s,border-color .3s}
-  .value[open]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .value{background:transparent;border:2px solid var(--white);border-radius:var(--radius);transition:background .3s,border-color .3s}
+  .value[open]{background:var(--white);color:var(--navy);border-color:var(--white)}
   .value summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:1.1rem;padding:1.1rem 1.4rem}
   .value summary::-webkit-details-marker{display:none}
   .value__n{font-family:"Cooper Lt BT";font-size:1.1rem;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--magenta);color:#fff;flex-shrink:0}
   .value__t{font-family:"Cooper Lt BT";font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1;flex:1;letter-spacing:.02em}
-  .value[open] .value__t{color:var(--purple)}
+  .value[open] .value__t{color:var(--navy)}
   .value__plus{width:34px;height:34px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;transition:rotate .3s;flex-shrink:0}
-  .value[open] .value__plus{rotate:45deg;border-color:var(--purple);color:var(--purple)}
+  .value[open] .value__plus{rotate:45deg;border-color:var(--navy);color:var(--navy)}
   .value p{padding:0 1.4rem 1.4rem calc(1.4rem + 42px + 1.1rem);font-size:1.08rem}
 
   /* ---------- locations ---------- */
   .loc{padding:clamp(4rem,8vw,7rem) 0}
   .loc__head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
-  .loc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
+  .loc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin-top:1rem}
   .loc__head h2 span{color:var(--magenta)}
-  .loc__head p{max-width:400px;color:#3d3044}
+  .loc__head p{max-width:400px;color:#103587}
   .loc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
-  .town{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;min-height:260px;transition:transform .25s, box-shadow .25s;box-shadow:0 6px 0 var(--purple)}
-  .town:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--magenta)}
+  .town{background:#fff;border:2px solid var(--navy);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;min-height:260px;transition:transform .25s, box-shadow .25s;box-shadow:0 6px 0 var(--navy)}
+  .town:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--blue)}
   .town__photo{aspect-ratio:4/3;border-radius:18px;margin:-.5rem -.5rem 0;padding:.5rem}
   .town__photo .ph__icon{width:36px;height:36px}
-  .town__pin{margin-top:-2.6rem;margin-left:.6rem;border:2px solid #fff;position:relative;z-index:1;width:52px;height:52px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
+  .town__pin{margin-top:-2.6rem;margin-left:.6rem;border:2px solid var(--navy);position:relative;z-index:1;width:52px;height:52px;border-radius:50%;background:var(--white);display:grid;place-items:center}
   .town__pin svg{width:24px}
-  .town h3{font-family:"Cooper Lt BT";font-weight:400;font-size:1.9rem;line-height:1.05;color:var(--purple)}
-  .town small{display:block;color:#6a5a72;font-size:.85rem}
+  .town h3{font-family:"Cooper Lt BT";font-weight:400;font-size:1.9rem;line-height:1.05;color:var(--navy)}
+  .town small{display:block;color:#103587;font-size:.85rem}
   .town__links{margin-top:auto;display:grid;justify-items:start;gap:.3rem}
   .town a{font-weight:600;font-size:.9rem;color:var(--magenta);display:inline-flex;align-items:center;gap:.4rem}
   .town a:hover{gap:.7rem}
-  .town:nth-child(2) .town__pin{background:#E3D2F0}
-  .town:nth-child(3) .town__pin{background:#D9E2F5}
 
   /* ---------- coverage map ---------- */
-  .loc__map{height:clamp(420px,42vw,520px);isolation:isolate;border:2px solid var(--purple);border-radius:var(--radius);box-shadow:0 6px 0 var(--purple);overflow:hidden;background:#e6e1ea;scroll-margin-top:110px}
+  .loc__map{height:clamp(420px,42vw,520px);isolation:isolate;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:0 6px 0 var(--navy);overflow:hidden;background:var(--white);scroll-margin-top:110px}
   .loc__map.leaflet-container{font:inherit}
-  .loc__map .leaflet-tile-pane{filter:saturate(.55)}
-  .map-pulse{opacity:0;transform-box:fill-box;transform-origin:center;animation:zone-pulse 3.6s ease-out infinite}
-  @keyframes zone-pulse{0%{opacity:.75;transform:scale(.3)}75%,100%{opacity:0;transform:scale(1)}}
-  .map-pin{background:none;border:0;filter:drop-shadow(0 2px 2px rgba(27,18,32,.35))}
+  .loc__map .leaflet-tile-pane{filter:grayscale(1)}
+  .map-heart svg{transform-origin:50% 90%;animation:beat 2.4s ease-in-out infinite}
+  @keyframes beat{0%,60%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+  .map__zones{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+  .map__zone{font:inherit;font-weight:600;font-size:.88rem;color:var(--navy);background:var(--white);border:2px solid var(--navy);border-radius:999px;padding:.45rem 1rem;cursor:pointer}
+  .map__zone[aria-pressed="true"]{background:var(--navy);color:var(--white)}
+  .map__zone:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+  .map-pin{background:none;border:0;filter:drop-shadow(0 2px 2px rgba(16,53,135,.35))}
   .map-pin svg{display:block;width:100%;height:100%}
-  .loc__map .leaflet-tooltip{background:#fff;border:2px solid var(--purple);border-radius:999px;box-shadow:none;color:var(--purple);font-weight:600;font-size:.78rem;padding:.1rem .6rem}
+  .loc__map .leaflet-tooltip{background:#fff;border:2px solid var(--navy);border-radius:999px;box-shadow:none;color:var(--navy);font-weight:600;font-size:.78rem;padding:.1rem .6rem}
   .loc__map .leaflet-tooltip::before{display:none}
-  .loc__map .leaflet-popup-content-wrapper{border-radius:18px;border:2px solid var(--purple);box-shadow:0 4px 0 var(--purple)}
+  .loc__map .leaflet-popup-content-wrapper{border-radius:18px;border:2px solid var(--navy);box-shadow:0 4px 0 var(--navy)}
   .loc__map .leaflet-popup-content{margin:.8rem 1rem;font-size:.85rem;line-height:1.4}
-  .loc__map .leaflet-popup-content b{display:block;font-family:"Cooper Lt BT";font-weight:400;font-size:1.15rem;color:var(--purple)}
+  .loc__map .leaflet-popup-content b{display:block;font-family:"Cooper Lt BT";font-weight:400;font-size:1.15rem;color:var(--navy)}
   .loc__map .leaflet-popup-content a{display:block;margin-top:.3rem;font-weight:600;color:var(--magenta)}
   .loc__legend{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;margin:1.2rem 0 2.4rem;font-size:.9rem;font-weight:500}
   .loc__legend span{display:inline-flex;align-items:center;gap:.45rem}
@@ -234,107 +238,176 @@
   /* ---------- services ---------- */
   .svc{padding:clamp(1rem,3vw,2rem) 0 clamp(4rem,7vw,6rem)}
   .svc__head{max-width:640px;margin-bottom:2.2rem}
-  .svc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
+  .svc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin-top:1rem}
   .svc__head h2 span{color:var(--magenta)}
   .svc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
-  .svc__card{background:#fff;border:2px solid var(--purple);border-radius:var(--radius);box-shadow:0 6px 0 var(--purple);padding:1.7rem;display:flex;flex-direction:column;align-items:flex-start;gap:.7rem}
-  .svc__card h3{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.1;color:var(--purple)}
-  .svc__card p{color:#3d3044}
+  .svc__card{background:#fff;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:0 6px 0 var(--navy);padding:1.7rem;display:flex;flex-direction:column;align-items:flex-start;gap:.7rem}
+  .svc__card h3{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.1;color:var(--navy)}
+  .svc__card p{color:#103587}
+  .svc__photo{align-self:stretch;aspect-ratio:16/10;border:2px solid var(--navy);border-radius:16px;padding:0;margin-bottom:.4rem}
   .svc__card a{margin-top:auto;font-weight:600;font-size:.9rem;color:var(--magenta)}
-  .svc__card--main{grid-column:1/-1;background:var(--purple);box-shadow:0 6px 0 var(--magenta)}
-  .svc__card--main h3{color:#fff}
-  .svc__tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.3rem}
-  .svc__tags span{background:#fff;color:var(--purple);border-radius:999px;padding:.4rem 1.1rem;font-weight:600;font-size:.95rem;opacity:0;translate:0 12px;scale:.9;transition:opacity .5s ease, translate .6s var(--ease), scale .6s var(--ease);transition-delay:calc(var(--i)*70ms + .25s)}
-  .in .svc__tags span{opacity:1;translate:0 0;scale:1}
-  .svc__tags span:hover{animation:nudge .6s ease-in-out}
-  @keyframes nudge{25%{rotate:2.5deg}75%{rotate:-2.5deg}}
-  .svc__card:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--magenta)}
-  .svc__card--main:hover{box-shadow:0 12px 0 var(--purple-deep)}
+  .svc__card:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--blue)}
   .svc__card a span{display:inline-block;transition:translate .25s var(--ease)}
   .svc__card:hover a span{translate:5px 0}
 
+  /* ---------- packages & study catalog ---------- */
+  .svc__block{margin-top:clamp(3rem,6vw,4.5rem)}
+  .svc__subhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.6rem}
+  .svc__subhead h3{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(1.6rem,2.8vw,2.3rem);line-height:1.1;color:var(--navy)}
+  .svc__subhead p{max-width:440px}
+  .svc__head + .svc__block{margin-top:0}
+  .pkg__grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:1.1rem;align-items:stretch;padding-top:1rem}
+  .pkg{--accent:var(--blue);background:var(--white);border:2px solid var(--navy);border-radius:var(--radius);box-shadow:0 8px 0 var(--accent);padding:2rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:.75rem;overflow:hidden}
+  .pkg::before{content:"";position:absolute;inset:0 0 auto;height:10px;background:var(--accent)}
+  .pkg:nth-child(3){--accent:var(--magenta)}
+  .pkg:nth-child(4){--accent:var(--navy)}
+  .pkg:hover{transform:translateY(-6px);box-shadow:0 14px 0 var(--accent)}
+  .pkg h4{font-family:"Cooper Lt BT";font-weight:400;font-size:1.35rem;line-height:1.15;color:var(--navy)}
+  .pkg__tag{font-size:.9rem}
+  .pkg__price{font-family:"Cooper Lt BT";font-size:2.3rem;line-height:1;color:var(--accent)}
+  .pkg__price small{display:block;font-family:"Poppins",sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;color:var(--navy)}
+  .pkg ul{list-style:none;display:grid;gap:.45rem;font-size:.9rem;line-height:1.35}
+  .pkg li{position:relative;padding-left:1.6rem}
+  .pkg li::before{content:"✓";position:absolute;left:0;top:.05em;width:18px;height:18px;border-radius:50%;background:var(--magenta);color:var(--white);font-size:.7rem;font-weight:700;display:grid;place-items:center}
+  .pkg a{margin-top:auto;display:flex;justify-content:center;align-items:center;gap:.4rem;white-space:nowrap;font-weight:600;font-size:.9rem;color:var(--white);background:var(--navy);border:2px solid var(--navy);border-radius:999px;padding:.7rem 1rem;transition:background .2s, border-color .2s}
+  .pkg a:hover{background:var(--magenta);border-color:var(--magenta)}
+  /* best seller: taller, dark, glowing badge */
+  .pkg--best{--accent:var(--magenta);background:radial-gradient(circle at 110% -10%, var(--magenta) 0 28%, transparent 29%), radial-gradient(circle at -20% 115%, var(--blue) 0 30%, transparent 31%), var(--navy);color:var(--white);border:3px solid var(--navy);box-shadow:0 10px 0 var(--magenta);margin-top:-1rem;padding:2.4rem 1.6rem 1.6rem}
+  .pkg--best::before{display:none}
+  .pkg--best h4{color:var(--white);font-size:1.7rem}
+  .pkg--best .pkg__price{color:var(--white);font-size:3rem}
+  .pkg--best .pkg__price small{color:var(--white)}
+  .pkg--best li::before{background:var(--white);color:var(--navy)}
+  .pkg--best a{background:var(--white);color:var(--navy);border-color:var(--white)}
+  .pkg--best a:hover{background:var(--magenta);color:var(--white);border-color:var(--magenta)}
+  .pkg__badge{align-self:flex-start;display:inline-flex;align-items:center;gap:.3rem;background:var(--magenta);color:var(--white);border:2px solid var(--white);border-radius:999px;padding:.3rem .9rem .3rem .6rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;rotate:-3deg;box-shadow:0 4px 0 rgba(0,0,0,.25);animation:float 3.5s ease-in-out infinite}
+  .pkg__badge .msr{font-size:1.05rem}
+  @media (max-width:1100px){
+    .pkg__grid{grid-template-columns:repeat(2,1fr)}
+    .pkg--best{margin-top:0}
+  }
+
+  /* ---------- icons ---------- */
+  .msr{font-family:"Material Symbols Rounded";font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;font-feature-settings:"liga";-webkit-font-smoothing:antialiased}
+  .svc__ico{width:52px;height:52px;border-radius:50%;background:var(--navy);color:var(--white);display:grid;place-items:center;font-size:26px;transition:rotate .3s var(--ease)}
+  .svc__card:hover .svc__ico{rotate:-10deg}
+  .pkg{position:relative}
+  .pkg h4{padding-right:3.4rem}
+  .pkg__ico{position:absolute;top:1.3rem;right:1.3rem;width:46px;height:46px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:22px;color:var(--accent);transition:rotate .3s var(--ease)}
+  .pkg--best .pkg__ico{color:var(--white)}
+  .pkg:hover .pkg__ico{rotate:12deg}
+  .gallery>.wrap{position:relative}
+  .deco{position:absolute;pointer-events:none;animation:float 6s ease-in-out infinite}
+  .deco--a{top:.4rem;right:9%;font-size:58px;color:var(--magenta);rotate:-10deg}
+  .deco--c{top:-.4rem;right:20%;font-size:34px;color:var(--navy);animation-duration:8s}
+  .gallery .deco--a{top:-3.6rem;right:3%}
+  .gallery .deco--c{top:-2.4rem;right:12%}
+  .pkg a span{display:inline-block;transition:translate .25s var(--ease)}
+  .pkg:hover a span{translate:5px 0}
+  .cat-wrap{position:relative}
+  .cat__tube{--h:clamp(220px,24vw,330px);position:absolute;right:clamp(1rem,5vw,4rem);bottom:calc(100% - var(--h) * .1);height:var(--h);width:auto;rotate:8deg;pointer-events:none;z-index:0;filter:drop-shadow(0 8px 14px rgba(16,53,135,.18))}
+  .cat-wrap .cat{position:relative;z-index:1}
+  .svc__subhead{padding-right:clamp(130px,17vw,250px)}
+  .cat{background:var(--white);border:2px solid var(--navy);border-radius:var(--radius);box-shadow:0 6px 0 var(--navy);padding:clamp(1.2rem,3vw,2rem)}
+  .cat__bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.4rem}
+  .cat__search{font:inherit;font-size:.92rem;color:var(--navy);background:var(--white);border:2px solid var(--navy);border-radius:999px;padding:.5rem 1.1rem;width:min(300px,100%)}
+  .cat__search::placeholder{color:var(--blue)}
+  .cat__search:focus-visible,.cat__more:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+  .cat__cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3rem);align-items:start}
+  .cat__col h4{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-family:"Cooper Lt BT";font-weight:400;font-size:1.4rem;color:var(--navy);padding-bottom:.5rem;border-bottom:2px solid var(--navy)}
+  .cat__title{display:inline-flex;align-items:center;gap:.45rem}
+  .cat__title .msr{font-size:1.6rem;color:var(--magenta)}
+  .cat__col h4 small{font-family:"Poppins",sans-serif;font-size:.8rem;font-weight:600;color:var(--blue)}
+  .cat__group h5{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);margin:1rem 0 .1rem}
+  .cat__list{list-style:none}
+  .cat__list li{padding:.55rem 0;border-bottom:1px solid var(--navy);font-size:.92rem;line-height:1.35}
+  .cat__none{padding:.8rem 0;font-size:.9rem}
+  .cat__more{font:inherit;font-size:.88rem;padding:.6rem 1.2rem;margin-top:1.1rem}
+  .cat__more[hidden]{display:none}
+  .cat__foot{margin-top:1.4rem;font-size:.9rem;text-align:center}
+  .cat__foot a{font-weight:600;color:var(--magenta)}
+
   /* ---------- business ---------- */
   .biz{padding:0 0 clamp(2.4rem,5vw,3.5rem)}
-  .biz__box{background:var(--navy);color:#fff;border-radius:40px;border:3px solid var(--purple);box-shadow:0 10px 0 var(--purple);padding:clamp(2.4rem,5vw,4.4rem);display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,4vw,3.5rem);align-items:center}
-  .biz__box .eyebrow{color:var(--blush)}
+  .biz__box{background:var(--blue);color:#fff;border-radius:40px;border:3px solid var(--navy);box-shadow:0 10px 0 var(--navy);padding:clamp(2.4rem,5vw,4.4rem);display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,4vw,3.5rem);align-items:center}
+  .biz__box .eyebrow{color:var(--white)}
   .biz__box h2{font-size:clamp(2.2rem,4.2vw,3.6rem);margin-top:1rem}
-  .biz__box h2 span{color:var(--blush)}
+  .biz__box h2 span{color:var(--white)}
   .biz__box p{margin:1rem 0 1.8rem}
   .biz__list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-  .biz__list li{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-radius:20px;padding:1.1rem 1.2rem;font-size:.92rem;line-height:1.4}
+  .biz__list li{background:transparent;border:2px solid var(--white);border-radius:20px;padding:1.1rem 1.2rem;font-size:.92rem;line-height:1.4}
   .biz__list b{display:block;font-family:"Cooper Lt BT";font-weight:400;font-size:1.15rem;margin-bottom:.25rem}
 
-  /* ---------- partners CTA ---------- */
-  .partner{padding:0 0 clamp(4rem,8vw,7rem)}
-  .partner__box{background:var(--magenta);color:#fff;border-radius:40px;border:3px solid var(--purple);box-shadow:0 10px 0 var(--purple);padding:clamp(2.4rem,5vw,4.4rem);display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:center;position:relative;overflow:hidden}
-  .partner__box h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
-  .partner__box p{font-size:1.1rem;max-width:560px;margin:1rem 0 1.8rem}
-  .partner__box .eyebrow{color:#fff}
-  .partner__art{justify-self:center;rotate:3deg}
 
   /* ---------- footer ---------- */
-  footer{background:var(--purple);color:#fff;padding:clamp(3.5rem,7vw,5.5rem) 0 2rem}
+  footer{background:var(--navy);color:#fff;padding:clamp(3.5rem,7vw,5.5rem) 0 2rem;border-radius:var(--section-r) var(--section-r) 0 0}
   .foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.5rem}
   .foot__logo{width:240px}
   .foot__tag{font-family:"Cooper Lt BT";font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.12;margin-top:1.6rem;max-width:460px}
-  .foot__tag span{color:var(--orchid)}
-  footer h4{font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);margin-bottom:1rem}
+  .foot__tag span{color:var(--magenta);text-decoration:underline var(--magenta) 3px;text-underline-offset:.14em}
+  footer h4{font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);margin-bottom:1rem}
   footer ul{list-style:none;display:grid;gap:.5rem;overflow-wrap:anywhere}
-  footer ul a:hover{color:var(--blush)}
+  footer ul a:hover{text-decoration:underline}
   .socials{display:flex;gap:.6rem;margin-top:1.2rem}
-  .socials a{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.4);display:grid;place-items:center;transition:background .2s,border-color .2s}
+  .socials a{width:44px;height:44px;border-radius:50%;border:2px solid var(--white);display:grid;place-items:center;transition:background .2s,border-color .2s}
   .socials a:hover{background:var(--magenta);border-color:var(--magenta)}
   .socials svg{width:20px;height:20px}
-  .foot__bottom{margin-top:3.5rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.85rem;opacity:.75}
+  .foot__bottom{margin-top:3.5rem;padding-top:1.4rem;border-top:1px solid var(--white);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.85rem}
 
   /* ---------- media placeholders (reemplazar por <img> o <video>) ---------- */
-  .ph{position:relative;overflow:hidden;border-radius:var(--radius);background:
-      repeating-linear-gradient(-45deg,rgba(114,31,134,.07) 0 14px,transparent 14px 28px),var(--blush);
-    border:2px dashed var(--purple);display:grid;place-items:center;text-align:center;color:var(--purple);padding:1rem}
+  .ph{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--white);
+    border:2px dashed var(--navy);display:grid;place-items:center;text-align:center;color:var(--navy);padding:1rem}
   .ph__inner{display:flex;flex-direction:column;align-items:center;gap:.35rem;max-width:90%}
-  .ph__icon{width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:grid;place-items:center}
+  .ph__icon{width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--navy);display:grid;place-items:center}
   .ph__icon svg{width:22px;height:22px}
-  .ph__tag{font-family:"Cooper Lt BT";font-size:1.05rem;letter-spacing:.08em;background:var(--purple);color:#fff;border-radius:999px;padding:.15rem .7rem}
+  .ph__tag{font-family:"Cooper Lt BT";font-size:1.05rem;letter-spacing:.08em;background:var(--navy);color:#fff;border-radius:999px;padding:.15rem .7rem}
   .ph[data-kind="gif"] .ph__tag{background:var(--magenta)}
   .ph__title{font-weight:700;font-size:.95rem;line-height:1.25}
-  .ph__spec{font-size:.75rem;opacity:.75;line-height:1.3}
-  .ph--dark{background:repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 14px,transparent 14px 28px),var(--purple-deep);border-color:var(--blush);color:#fff}
-  .ph--dark .ph__icon{background:var(--purple);border-color:var(--blush)}
+  .ph__spec{font-size:.75rem;line-height:1.3}
+  .ph--dark{background:var(--blue);border-color:var(--white);color:var(--white)}
+  .ph--dark .ph__icon{background:var(--navy);border-color:var(--white)}
   .ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .ph:has(>img,>video){border-style:solid;padding:0}
 
   /* hero photo inside blob */
   .hero__art .sticker,.hero__art .badge-spin{z-index:3}
-  .hero__photo{position:absolute;inset:6%;border-radius:46% 54% 42% 58%/52% 44% 56% 48%;animation:morph 12s ease-in-out infinite;border:3px dashed #fff;z-index:1}
+  .hero__photo{position:absolute;inset:2%;border-radius:46% 54% 42% 58%/52% 44% 56% 48%;animation:morph 12s ease-in-out infinite;border:4px solid var(--navy);box-shadow:0 8px 0 var(--navy);z-index:1}
 
   /* gallery strip */
   .gallery{padding:clamp(5rem,9vw,7rem) 0 clamp(2rem,4vw,3rem)}
   .gallery__head{display:flex;justify-content:space-between;align-items:end;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
-  .gallery__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:1rem}
+  .gallery__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin-top:1rem}
   .gallery__head h2 span{color:var(--magenta)}
   .gallery__track{--cw:clamp(200px,24vw,300px);position:relative;height:calc(var(--cw)*1.25*1.16 + 2.5rem)}
-  .gallery__track .ph{position:absolute;left:50%;top:50%;width:var(--cw);aspect-ratio:4/5;box-shadow:0 6px 0 var(--purple);opacity:.8;translate:calc(-50% + var(--o,0)*(var(--cw)*1.1 + 1.2rem)) -50%;transition:translate .7s var(--ease), scale .7s var(--ease), rotate .7s var(--ease), opacity .4s ease, box-shadow .3s ease}
+  .gallery__track .ph{position:absolute;left:50%;top:50%;width:var(--cw);aspect-ratio:4/5;box-shadow:0 6px 0 var(--navy);translate:calc(-50% + var(--o,0)*(var(--cw)*1.1 + 1.2rem)) -50%;transition:translate .7s var(--ease), scale .7s var(--ease), rotate .7s var(--ease), opacity .4s ease, box-shadow .3s ease}
   .gallery__track .ph:nth-child(odd){rotate:-1.5deg}
   .gallery__track .ph:nth-child(even){rotate:1.5deg}
-  .gallery__track .ph.is-active{scale:1.16;rotate:0deg;opacity:1;z-index:2;box-shadow:0 6px 0 var(--magenta)}
+  .gallery__track .ph.is-active{scale:1.16;rotate:0deg;z-index:2;box-shadow:0 6px 0 var(--blue)}
   .gallery__track .ph.is-off{opacity:0;visibility:hidden;transition:translate .7s var(--ease), scale .7s var(--ease), rotate .7s var(--ease), opacity .4s ease, visibility 0s .4s}
   .gallery__nav{display:flex;justify-content:center;gap:.8rem;margin-top:1rem}
-  .gallery__nav button{width:52px;height:52px;border-radius:50%;background:#fff;color:var(--purple);border:2px solid var(--purple);box-shadow:0 4px 0 var(--purple);display:grid;place-items:center;cursor:pointer;transition:transform .2s, box-shadow .2s, background .2s, color .2s}
-  .gallery__nav button:hover{background:var(--magenta);color:#fff;transform:translateY(-2px);box-shadow:0 6px 0 var(--purple)}
-  .gallery__nav button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple)}
+  .gallery__nav button{width:52px;height:52px;border-radius:50%;background:#fff;color:var(--navy);border:2px solid var(--navy);box-shadow:0 4px 0 var(--navy);display:grid;place-items:center;cursor:pointer;transition:transform .2s, box-shadow .2s, background .2s, color .2s}
+  .gallery__nav button:hover{background:var(--magenta);color:#fff;transform:translateY(-2px);box-shadow:0 6px 0 var(--navy)}
+  .gallery__nav button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--navy)}
   .gallery__nav svg{width:22px;height:22px}
 
   /* social grid */
   .social{padding:0 0 clamp(4rem,8vw,6rem)}
   .social__head{text-align:center;margin-bottom:2rem}
-  .social__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--purple);margin-top:.8rem}
+  .social__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin-top:.8rem}
   .social__head h2 span{color:var(--magenta)}
+  .social__reels{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
+  .social__reels .reel{aspect-ratio:9/16;border-radius:24px;padding:0;background:var(--navy);box-shadow:0 6px 0 var(--navy)}
+  .social__reels video{object-fit:cover}
   .social__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.8rem}
   .social__grid .ph{aspect-ratio:1;border-radius:20px;padding:.5rem}
   .social__grid .ph__title{font-size:.8rem}
-  .social__cta{display:flex;justify-content:center;margin-top:1.8rem}
+  .social__cta{display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:2rem;text-align:center}
+  .social__cta p{font-weight:600;font-size:1.1rem}
+  .social__links{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem}
+  .social__links svg{width:20px;height:20px}
 
   /* floating whatsapp */
-  .wa{position:fixed;right:20px;bottom:20px;z-index:50;width:62px;height:62px;border-radius:50%;background:#25D366;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .2s}
+  .wa{position:fixed;right:20px;bottom:20px;z-index:50;width:62px;height:62px;border-radius:50%;background:var(--magenta);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 8px 24px rgba(16,53,135,.3);transition:transform .2s}
   .wa:hover{transform:scale(1.08)}
   .wa svg{width:30px;height:30px}
 
@@ -359,13 +432,12 @@
   /* hand-drawn underline on highlighted words */
   .has-scribble{position:relative;display:inline-block}
   .scribble{position:absolute;left:0;bottom:-.08em;width:100%;height:.2em;overflow:visible;pointer-events:none;clip-path:inset(-60% 100% -60% 0);transition:clip-path 1s ease-in-out .5s}
-  .scribble path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.55}
+  .scribble path{fill:none;stroke:var(--magenta);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
   .in .scribble{clip-path:inset(-60% 0 -60% 0)}
 
   /* gentle rock every few seconds */
   @keyframes rock{0%,70%,100%{rotate:0deg}78%{rotate:1.6deg}86%{rotate:-1.6deg}94%{rotate:.6deg}}
   .rock{animation:rock 7s ease-in-out infinite}
-  .rock:hover{animation-play-state:paused}
 
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -376,7 +448,6 @@
     .mv__grid{width:auto;flex-wrap:wrap;justify-content:center;gap:1.5rem}
     .mv__card{margin-right:0}
     .mv__card[aria-hidden]{display:none}
-    .svc__tags span{opacity:1;translate:none;scale:none}
     .scribble{clip-path:none}
     .draw path{stroke-dashoffset:0}
   }
@@ -385,25 +456,26 @@
   @media (max-width:1000px){
     .nav__links,.nav__bar>.btn{display:none}
     .nav__toggle{display:block}
-    .nav__mobile{display:grid;gap:.2rem;background:#fff;border:2px solid var(--purple);border-radius:28px;margin-top:.6rem;padding:0 1.4rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s, opacity .3s, padding .35s}
+    .nav__mobile{display:grid;gap:.2rem;background:#fff;border:2px solid var(--navy);border-radius:28px;margin-top:.6rem;padding:0 1.4rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s, opacity .3s, padding .35s}
     .nav.open .nav__mobile{max-height:520px;opacity:1;padding:1rem 1.4rem 1.4rem}
-    .nav__mobile a{padding:.6rem 0;font-weight:600;border-bottom:1px solid #eee}
-    .nav__mobile .btn{margin-top:.8rem;border-bottom:2px solid var(--purple)}
+    .nav__mobile a{padding:.6rem 0;font-weight:600;border-bottom:1px solid var(--navy)}
+    .nav__mobile .btn{margin-top:.8rem;border-bottom:2px solid var(--white)}
     .nav.open .nav__toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
     .nav.open .nav__toggle span:nth-child(2){opacity:0}
     .nav.open .nav__toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-    .hero__grid,.about__grid,.philo__grid,.culture__grid,.partner__box,.biz__box{grid-template-columns:1fr}
+    .hero__grid,.about__grid,.philo__grid,.culture__grid,.biz__box{grid-template-columns:1fr}
     .hero__art{max-width:400px}
     .culture__side{position:static}
     .foot__grid{grid-template-columns:1fr 1fr}
     .foot__grid>div:first-child{grid-column:1/-1}
-    .partner__art{justify-self:start;rotate:0deg;aspect-ratio:16/10!important;width:100%!important}
     .social__grid{grid-template-columns:repeat(3,1fr)}
+    .social__reels{grid-template-columns:repeat(2,1fr);gap:.7rem}
     .stats{grid-template-rows:none}
     .stats__photo{aspect-ratio:16/10;min-height:0}
   }
   @media (max-width:720px){
-    .ps__grid,.loc__grid,.svc__grid{grid-template-columns:1fr}
+    .ps__grid,.loc__grid,.svc__grid,.cat__cols{grid-template-columns:1fr}
+    .deco{display:none}
     .ps__arrow{top:50%;rotate:90deg}
     .nav__logo img{height:30px}
     .sticker--a{left:0}.sticker--b{right:0}
@@ -413,7 +485,7 @@
     .gallery__track{--cw:58vw}
   }
   @media (max-width:480px){
-    .loc__grid,.stats,.biz__list{grid-template-columns:1fr}
+    .loc__grid,.stats,.biz__list,.pkg__grid{grid-template-columns:1fr}
     .foot__grid{grid-template-columns:1fr}
     .hero__ctas .btn{width:100%}
     .town{min-height:auto}
@@ -441,9 +513,8 @@
       <a href="#cultura">Cultura</a>
       <a href="#sucursales">Sucursales</a>
       <a href="#empresas">Empresas</a>
-      <a href="#alianzas">Alianzas</a>
     </nav>
-    <a href="#sucursales" class="btn btn--primary">Agenda tu estudio</a>
+    <a href="#sucursales" class="btn btn--blue">Agenda tu estudio</a>
     <button class="nav__toggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <div class="nav__mobile">
@@ -453,8 +524,7 @@
     <a href="#cultura">Cultura</a>
     <a href="#sucursales">Sucursales</a>
     <a href="#empresas">Empresas</a>
-    <a href="#alianzas">Alianzas</a>
-    <a href="#sucursales" class="btn btn--primary">Agenda tu estudio</a>
+    <a href="#sucursales" class="btn btn--blue">Agenda tu estudio</a>
   </div>
 </header>
 
@@ -477,27 +547,14 @@
     </div>
 
     <div class="hero__art reveal d2">
-      <!-- IMAGEN HERO: reemplaza el contenido de .ph por <img src="assets/hero.jpg" alt="..."> -->
+      <!-- IMAGEN HERO -->
       <figure class="ph hero__photo" data-kind="foto">
-        <div class="ph__inner">
-          <span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span>
-          <span class="ph__tag">Foto hero</span>
-          <span class="ph__title">Paciente sonriendo con una química de Inovalab</span>
-          <span class="ph__spec">Retrato vertical, luz cálida · 1200×1200 px</span>
-        </div>
+        <img src="assets/fotos/hero-corazon.jpg" alt="Niña y especialista de Inovalab formando un corazón con las manos" fetchpriority="high" style="object-position:50% 35%">
       </figure>
-      <svg class="doodle draw" viewBox="0 0 400 400" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="z-index:2;pointer-events:none">
-        <!-- squiggles -->
-        <path style="--len:300" d="M60 280c20-30 40 10 60-20s40 10 60-20" stroke="#D94FD8" stroke-width="6"/>
-        <path style="--len:200" d="M320 80l18-30M335 100l30-12M300 66l4-34" stroke="#F7C9F3" stroke-width="6"/>
-        <path style="--len:300" d="M290 300c30 0 40 30 20 40s-30-20 0-30 50 10 40 40" stroke="#DD1FD6" stroke-width="6"/>
-        <circle cx="72" cy="90" r="10" stroke="#F7C9F3" stroke-width="6" style="--len:70"/>
-        <path style="--len:200" d="M50 170l14 14 14-14 14 14 14-14" stroke="#fff" stroke-width="5"/>
-      </svg>
       <div class="sticker sticker--a"><b>+5,000</b>pacientes<br>atendidos</div>
       <div class="sticker sticker--b"><b>3</b>sucursales<br>en Yucatán</div>
       <svg class="badge-spin" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="58" fill="#DD1FD6" stroke="#721F86" stroke-width="3"/>
+        <circle cx="60" cy="60" r="58" fill="#cc33cc" stroke="#103587" stroke-width="3"/>
         <defs><path id="circ" d="M60 60m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs>
         <text font-family="Poppins" font-weight="700" font-size="10.5" letter-spacing="2.4" fill="#fff"><textPath href="#circ">CIENCIA · HUMANIDAD · BIENESTAR ·</textPath></text>
         <path d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z" fill="#fff"/>
@@ -507,7 +564,6 @@
 </section>
 
 <!-- Problem / Solution -->
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true"><path fill="#721F86" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 <section class="ps">
   <div class="wrap">
     <div class="ps__head">
@@ -519,7 +575,7 @@
     <div class="ps__wrap">
       <div class="ps__grid">
         <article class="card card--before reveal from-l">
-          <span class="eyebrow" style="color:var(--blush)">El problema</span>
+          <span class="eyebrow" style="color:var(--white)">El problema</span>
           <h3 class="display" style="margin-top:.8rem">Así se sentía antes</h3>
           <p>Durante muchos años los servicios de diagnóstico se han vivido en espacios fríos, impersonales y poco agradables.</p>
           <p>Muchas personas sienten ansiedad o incomodidad al realizarse estudios.</p>
@@ -549,20 +605,22 @@
 <!-- Gallery: momentos reales (fotos y GIFs) -->
 <section class="gallery">
   <div class="wrap">
+    <span class="deco deco--a" aria-hidden="true"><span class="msr">favorite</span></span>
+    <span class="deco deco--c" aria-hidden="true"><span class="msr">water_drop</span></span>
     <div class="gallery__head">
       <div>
         <span class="eyebrow reveal">Así se vive Inovalab</span>
         <h2 class="display reveal d1">Momentos que se <span>sienten</span> diferente</h2>
       </div>
-      <p class="reveal d2" style="max-width:380px;color:#3d3044">Así te recibimos en cada sucursal.</p>
+      <p class="reveal d2" style="max-width:380px;color:#103587">Así te recibimos en cada sucursal.</p>
     </div>
     <!-- Reemplaza cada .ph__inner por <img src="assets/galeria-1.jpg" alt="..."> (o un .gif / <video autoplay muted loop playsinline>) -->
     <div class="gallery__track reveal d2">
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Recepción cálida</span><span class="ph__spec">Equipo saludando a un paciente · 4:5, 1080×1350</span></div></figure>
-      <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Toma de muestra sin estrés</span><span class="ph__spec">Clip corto en loop, 3–5 s · 4:5</span></div></figure>
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Tecnología del laboratorio</span><span class="ph__spec">Equipo de análisis, detalle · 4:5</span></div></figure>
-      <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Entrega de resultados</span><span class="ph__spec">Paciente recibiendo resultados en el celular · 4:5</span></div></figure>
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Espacios de la sucursal</span><span class="ph__spec">Sala de espera con la decoración morada · 4:5</span></div></figure>
+      <figure class="ph" data-kind="foto"><img src="assets/fotos/recepcion.jpg" alt="Recepción de Inovalab atendiendo a una paciente" loading="lazy" decoding="async"></figure>
+      <figure class="ph" data-kind="foto"><img src="assets/fotos/galeria-mama-hija.jpg" alt="Mamá e hija sonriendo en el sillón de Inovalab con un cojín de corazón" loading="lazy" decoding="async" style="object-position:50% 35%"></figure>
+      <figure class="ph" data-kind="foto"><img src="assets/fotos/laboratorio.jpg" alt="Químicas de Inovalab trabajando con el microscopio" loading="lazy" decoding="async"></figure>
+      <figure class="ph" data-kind="gif"><img src="assets/fotos/ultrasonido.png" alt="Médico de Inovalab realizando un ultrasonido" loading="lazy" decoding="async"></figure>
+      <figure class="ph" data-kind="foto"><img src="assets/fotos/quimica-pipeta.jpg" alt="Química de Inovalab trabajando con una micropipeta en el laboratorio" loading="lazy" decoding="async" style="object-position:55% 40%"></figure>
     </div>
     <div class="gallery__nav reveal d3">
       <button type="button" data-dir="-1" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
@@ -581,16 +639,16 @@
       <p class="reveal d2">Creemos en el trabajo colaborativo y en la creación de modelos de negocio que no solo sean rentables, sino que también acerquen servicios de diagnóstico de calidad a más personas.</p>
       <div class="about__since reveal d3"><b>2022</b> Iniciamos con la visión de expandir nuestro modelo</div>
       <!-- FOTO EQUIPO: reemplaza .ph__inner por <img src="assets/equipo.jpg" alt="Equipo Inovalab"> -->
-      <figure class="ph reveal d3" data-kind="foto" style="aspect-ratio:16/10;margin-top:2rem;box-shadow:0 6px 0 var(--magenta)"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto equipo</span><span class="ph__title">Todo el equipo Inovalab con uniforme</span><span class="ph__spec">Horizontal, ambiente alegre · 1600×1000 px</span></div></figure>
+      <figure class="ph reveal d3" data-kind="foto" style="aspect-ratio:16/10;margin-top:2rem;box-shadow:0 6px 0 var(--blue)"><img src="assets/fotos/comunidad-ninas.jpg" alt="Dos niñas con lentes de sol junto al logo de Inovalab" loading="lazy" decoding="async" style="object-position:50% 55%"></figure>
     </div>
     <div class="stats">
       <p class="stats__title reveal">Hoy, nuestros resultados nos respaldan</p>
-      <div class="stat reveal pop"><span class="stat__num" data-count="3">0</span><span class="stat__label">sucursales en operación</span></div>
-      <div class="stat reveal pop d1"><span class="stat__num" data-count="5000" data-prefix="+">0</span><span class="stat__label">pacientes atendidos</span></div>
-      <div class="stat reveal pop d2"><span class="stat__num" data-count="25" data-suffix="%">0</span><span class="stat__label">crecimiento anual sostenido</span></div>
-      <div class="stat reveal pop d3"><span class="stat__num" data-count="8000" data-prefix="+">0</span><span class="stat__label">personas en nuestra comunidad</span></div>
+      <div class="stat reveal pop"><span class="stat__ico msr" aria-hidden="true">location_on</span><span class="stat__num" data-count="3">0</span><span class="stat__label">sucursales en operación</span></div>
+      <div class="stat reveal pop d1"><span class="stat__ico msr" aria-hidden="true">groups</span><span class="stat__num" data-count="5000" data-prefix="+">0</span><span class="stat__label">pacientes atendidos</span></div>
+      <div class="stat reveal pop d2"><span class="stat__ico msr" aria-hidden="true">trending_up</span><span class="stat__num" data-count="25" data-suffix="%">0</span><span class="stat__label">crecimiento anual sostenido</span></div>
+      <div class="stat reveal pop d3"><span class="stat__ico msr" aria-hidden="true">diversity_3</span><span class="stat__num" data-count="8000" data-prefix="+">0</span><span class="stat__label">personas en nuestra comunidad</span></div>
       <!-- FOTO COMUNIDAD: reemplaza .ph__inner por <img src="assets/comunidad.jpg" alt="Familia Soy Inovalab"> -->
-      <figure class="ph stats__photo reveal d2" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto comunidad</span><span class="ph__title">Familia Soy Inovalab: pacientes y equipo, gente real</span><span class="ph__spec">Horizontal, ambiente alegre · 1600×1000 px</span></div></figure>
+      <figure class="ph stats__photo reveal d2" data-kind="foto"><img src="assets/fotos/comunidad-tazas.jpg" alt="Grupo de la comunidad Inovalab brindando con tazas" loading="lazy" decoding="async" style="object-position:50% 62%"></figure>
     </div>
   </div>
 </section>
@@ -602,22 +660,187 @@
       <span class="eyebrow reveal">Servicios</span>
       <h2 class="display reveal d1">Lo que hacemos <span>por ti</span></h2>
     </div>
-    <div class="svc__grid">
-      <article class="svc__card svc__card--main reveal pop">
-        <h3>Análisis clínicos</h3>
-        <div class="svc__tags"><span>Generales</span><span>De especialidad</span><span>Genética</span><span>Pruebas de paternidad</span><span>Tamiz neonatal</span><span>Antidoping</span></div>
-      </article>
+    <div class="svc__block">
+      <div class="svc__subhead">
+        <h3 class="reveal">Catálogo de estudios</h3>
+        <p class="reveal d1">Busca tu estudio. Si no lo encuentras, pregúntanos por WhatsApp.</p>
+      </div>
+      <div class="cat-wrap">
+        <img class="cat__tube" src="assets/fotos/tubo-muestra.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <div class="cat reveal">
+        <div class="cat__bar">
+          <p>Algunos de los estudios que realizamos.</p>
+          <input type="search" class="cat__search" placeholder="Buscar estudio…" aria-label="Buscar estudio">
+        </div>
+        <div class="cat__cols">
+          <section class="cat__col" aria-labelledby="cat-h-clinicos">
+            <h4 id="cat-h-clinicos"><span class="cat__title"><span class="msr" aria-hidden="true">bloodtype</span>Análisis clínicos</span> <small>60 estudios</small></h4>
+            <ul class="cat__list" data-limit="8">
+              <li>Citometría hemática completa (BH)</li>
+              <li>Examen general de orina (EGO)</li>
+              <li>Química sanguínea 6 elementos (QS6)</li>
+              <li>Perfil de lípidos I (PLIP)</li>
+              <li>Química sanguínea 4 elementos (QS4)</li>
+              <li>Perfil hepático I (PFH I)</li>
+              <li>Prueba inmunológica de embarazo en sangre</li>
+              <li>Prueba de antígeno SARS-CoV-2</li>
+              <li>VDRL</li>
+              <li>Creatinina en orina</li>
+              <li>Perfil tiroideo V</li>
+              <li>Reacciones febriles</li>
+              <li>Tiempos de coagulación (TP y TTP)</li>
+              <li>VIH</li>
+              <li>Hemoglobina glicosilada (HbA1c)</li>
+              <li>Microalbuminuria (albúmina en orina)</li>
+              <li>Urocultivo</li>
+              <li>Antígeno prostático específico total (PSA)</li>
+              <li>Hormona estimulante de la tiroides (TSH)</li>
+              <li>Antidoping de 6 elementos (THC, AMP, COC, MET, OPI, BZD)</li>
+              <li>Coprológico 1 (CPR 1)</li>
+              <li>Coproparasitoscópico</li>
+              <li>Electrolitos séricos (3 parámetros)</li>
+              <li>Factor reumatoide (FR)</li>
+              <li>Glucosa</li>
+              <li>Insulina sérica basal</li>
+              <li>Proteína C reactiva infecciosa (PCR)</li>
+              <li>Albúmina en orina al azar</li>
+              <li>Androstenediona</li>
+              <li>Antiestreptolisinas (ASO)</li>
+              <li>CA 125 (ovario)</li>
+              <li>CA 15-3 (mama)</li>
+              <li>Conteo de reticulocitos (RETIS)</li>
+              <li>Cortisol matutino</li>
+              <li>Creatinina sérica</li>
+              <li>Cultivo de exudado cérvico vaginal</li>
+              <li>Grupo sanguíneo y factor RH</li>
+              <li>Hierro sérico</li>
+              <li>Litio sérico</li>
+              <li>Panel completo de dengue (AC + NS1)</li>
+              <li>Panel de hepatitis B y C</li>
+              <li>Péptido natriurético ventricular (proBNP)</li>
+              <li>Perfil anémico II</li>
+              <li>Perfil de andrógenos</li>
+              <li>Perfil ginecológico I</li>
+              <li>Perfil ginecológico V</li>
+              <li>Perfil ginecológico VI</li>
+              <li>Perfil tiroideo III</li>
+              <li>Potasio urinario</li>
+              <li>Prolactina</li>
+              <li>Proteínas totales séricas</li>
+              <li>Química sanguínea 3 elementos (QS3)</li>
+              <li>Química sanguínea 24 elementos (QS24)</li>
+              <li>Química sanguínea 45 elementos (QS45)</li>
+              <li>Química sanguínea coronaria 3 elementos (QS3C)</li>
+              <li>Sangre oculta en heces</li>
+              <li>Tamiz metabólico neonatal ampliado</li>
+              <li>Testosterona libre</li>
+              <li>Tiroxina libre (T4 libre)</li>
+              <li>Vitamina D (25-hidroxivitamina D)</li>
+            </ul>
+            <p class="cat__none" hidden>Sin coincidencias en esta lista.</p>
+            <button type="button" class="btn btn--ghost cat__more" data-label="Ver los 60 estudios">Ver los 60 estudios</button>
+          </section>
+          <section class="cat__col" aria-labelledby="cat-h-especialidad">
+            <h4 id="cat-h-especialidad"><span class="cat__title"><span class="msr" aria-hidden="true">labs</span>Especialidades</span> <small>21 estudios</small></h4>
+            <div class="cat__group">
+              <h5>Análisis de especialidad</h5>
+              <ul class="cat__list" data-limit="4">
+                <li>Vitamina D</li>
+                <li>Perfil tiroideo</li>
+                <li>Perfil hormonal</li>
+                <li>Panel de ITS</li>
+                <li>Índice HOMA</li>
+                <li>Insulina sérica</li>
+                <li>Prueba de aliento H. pylori</li>
+                <li>Marcadores tumorales</li>
+              </ul>
+            </div>
+            <div class="cat__group">
+              <h5>Enfermedades autoinmunes</h5>
+              <ul class="cat__list" data-limit="4">
+                <li>ANA – Anticuerpos antinucleares</li>
+                <li>ANCA – Anticuerpos anticitoplasma de neutrófilos</li>
+                <li>Anticuerpos antimitocondriales (AMA)</li>
+                <li>Anti-DNA de doble cadena (Anti-dsDNA)</li>
+                <li>Anti-Sm (Smith)</li>
+                <li>Anti-Ro (SSA)</li>
+                <li>Anti-La (SSB)</li>
+                <li>Complemento C3</li>
+                <li>Complemento C4</li>
+                <li>Anticuerpos antifosfolípidos</li>
+                <li>Anticoagulante lúpico</li>
+                <li>Anticardiolipinas IgG e IgM</li>
+                <li>Anti-beta-2 glicoproteína I IgG e IgM</li>
+              </ul>
+            </div>
+            <p class="cat__none" hidden>Sin coincidencias en esta lista.</p>
+            <button type="button" class="btn btn--ghost cat__more" data-label="Ver los 21 estudios">Ver los 21 estudios</button>
+          </section>
+        </div>
+        <div class="cat__foot">
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20cotizar%20un%20estudio" target="_blank" rel="noopener">¿No ves tu estudio? Cotízalo por WhatsApp →</a>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="svc__block">
+      <div class="svc__subhead">
+        <h3 class="reveal">Paquetes</h3>
+      </div>
+      <div class="pkg__grid">
+        <article class="pkg pkg--best reveal pop">
+          <span class="pkg__badge"><span class="msr" aria-hidden="true">star</span>Best seller</span>
+          <span class="pkg__ico" aria-hidden="true"><span class="msr">science</span></span>
+          <h4>Check-up General</h4>
+          <p class="pkg__tag">¡Todo comienza con un chequeo! Ideal para todas las edades.</p>
+          <p class="pkg__price"><small>Desde</small>$690</p>
+          <ul><li>Biometría hemática</li><li>Química sanguínea de 6 elementos</li><li>Examen general de orina (EGO)</li></ul>
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20el%20Check-up%20General" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
+        </article>
+        <article class="pkg reveal pop d1">
+          <span class="pkg__ico" aria-hidden="true"><span class="msr">water_drop</span></span>
+          <h4>Check-up de Glucosa</h4>
+          <p class="pkg__tag">Conoce y controla tus niveles de azúcar.</p>
+          <p class="pkg__price"><small>Desde</small>$410</p>
+          <ul><li>Glucosa</li><li>Hemoglobina glicosilada (HbA1c)</li><li>Examen general de orina (EGO)</li></ul>
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20el%20Check-up%20de%20Glucosa" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
+        </article>
+        <article class="pkg reveal pop d2">
+          <span class="pkg__ico" aria-hidden="true"><span class="msr">coronavirus</span></span>
+          <h4>Prueba de Influenza A, B y H1N1</h4>
+          <p class="pkg__tag">Identifica a tiempo una infección ante fiebre, tos, dolor de garganta o dolor muscular.</p>
+          <p class="pkg__price"><small>Desde</small>$550</p>
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20la%20Prueba%20de%20Influenza" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
+        </article>
+        <article class="pkg reveal pop d3">
+          <span class="pkg__ico" aria-hidden="true"><span class="msr">pregnant_woman</span></span>
+          <h4>Prueba de Embarazo</h4>
+          <p class="pkg__tag">Resuelve tus dudas con confianza. Detecta la hormona hCG en laboratorio.</p>
+          <p class="pkg__price"><small>Desde</small>$250</p>
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20la%20Prueba%20de%20Embarazo" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
+        </article>
+      </div>
+    </div>
+
+    <div class="svc__grid svc__block">
       <article class="svc__card reveal pop">
+        <figure class="ph svc__photo"><img src="assets/fotos/servicio-ultrasonido.webp" alt="Especialista de Inovalab realizando un ultrasonido 4D" loading="lazy" decoding="async" style="object-position:55% 40%"></figure>
+        <span class="svc__ico" aria-hidden="true"><span class="msr">monitor_heart</span></span>
         <h3>Ultrasonido</h3>
         <p>Disponible en nuestra sucursal de Ticul.</p>
         <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20ultrasonido%20en%20Ticul" target="_blank" rel="noopener">Agendar por WhatsApp <span>→</span></a>
       </article>
       <article class="svc__card reveal pop d1">
+        <figure class="ph svc__photo"><img src="assets/fotos/servicio-domicilio.jpg" alt="Química de Inovalab en una visita a domicilio con una paciente" loading="lazy" decoding="async" style="object-position:50% 8%"></figure>
+        <span class="svc__ico" aria-hidden="true"><span class="msr">home_health</span></span>
         <h3>Hasta donde estés</h3>
-        <p>Servicio a domicilio en Ticul, Oxkutzcab, Maní, Mérida y sus alrededores.</p>
+        <p>Análisis clínicos hasta tu hogar. Agenda por WhatsApp, nosotros vamos y tus resultados llegan el mismo día.</p>
         <a href="#mapa">Ver en el mapa <span>→</span></a>
       </article>
       <article class="svc__card reveal pop d2">
+        <figure class="ph svc__photo"><img src="assets/fotos/servicio-empresas.jpg" alt="Equipo Inovalab con colaboradores de una empresa" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
+        <span class="svc__ico" aria-hidden="true"><span class="msr">corporate_fare</span></span>
         <h3>Para empresas</h3>
         <p>Convenios, paquetes corporativos, jornadas de salud y programas anuales.</p>
         <a href="#empresas">Conoce Inovalab Empresas <span>→</span></a>
@@ -627,7 +850,6 @@
 </section>
 
 <!-- Philosophy -->
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true"><path fill="#F6F2F7" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 <section class="philo" id="filosofia">
   <div class="wrap philo__grid">
     <div>
@@ -635,16 +857,27 @@
       <h2 class="display reveal d1">Diagnóstico con ciencia, humanidad y bienestar consciente</h2>
       <p class="reveal d2">Creemos que cuidar la salud debería sentirse diferente. Creamos espacios donde salgan sintiéndose mejor, donde el diagnóstico se vive con ciencia, humanidad y bienestar consciente.</p>
       <!-- GIF FILOSOFÍA: reemplaza .ph__inner por <img src="assets/filosofia.gif" alt="..."> o <video autoplay muted loop playsinline src="assets/filosofia.mp4"></video> -->
-      <figure class="ph reveal d3" data-kind="gif" style="aspect-ratio:16/9;margin-top:2rem;border-radius:28px 28px 28px 8px"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Abrazo o sonrisa de un paciente al salir</span><span class="ph__spec">Loop 3–6 s, cámara lenta · 16:9</span></div></figure>
+      <figure class="ph reveal d3" data-kind="gif" style="aspect-ratio:16/9;margin-top:2rem;border-radius:28px 28px 28px 8px"><video src="assets/videos/video-inovalab.mp4" autoplay muted loop playsinline controls aria-label="Video de bienvenida de Inovalab"></video></figure>
     </div>
+    <div class="philo__side">
+      <div class="philo__photos reveal d1">
+        <figure class="ph"><img src="assets/fotos/social-certificados.jpg" alt="Grupo celebrando con sus certificados de capacitación" loading="lazy" decoding="async" style="object-position:50% 42%;transform:scale(1.5);transform-origin:50% 42%"></figure>
+        <figure class="ph"><img src="assets/fotos/social-dia-nino-abuelo.jpg" alt="Paciente sonriendo con su tarjeta del Día del Niño" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
+        <figure class="ph"><img src="assets/fotos/social-evento-amigas.jpg" alt="Tres asistentes a un evento de Inovalab con sus bolsas" loading="lazy" decoding="async" style="object-position:50% 35%"></figure>
+      </div>
     <figure class="philo__quote reveal from-r d2">
       <span class="qmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M4 18v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7H4zm9 0v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7h-7z"/></svg></span>
       <blockquote>Porque cuando estás <em>bien por dentro</em>, se refleja en todo.</blockquote>
       <cite>— Filosofía Inovalab</cite>
     </figure>
+      <div class="philo__photos philo__photos--bottom reveal d3">
+        <figure class="ph"><img src="assets/fotos/social-ultrasonido.jpg" alt="Especialista de Inovalab realizando un ultrasonido" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
+        <figure class="ph"><img src="assets/fotos/social-paciente-casco.jpg" alt="Paciente con su regalo en la sucursal Inovalab" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
+        <figure class="ph"><img src="assets/fotos/social-nino-medalla.jpg" alt="Química de Inovalab con un niño que muestra su medalla" loading="lazy" decoding="async" style="object-position:50% 30%"></figure>
+      </div>
+    </div>
   </div>
 </section>
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleY(-1)"><path fill="#F6F2F7" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 
 <!-- Mission / Vision stays pinned while Culture slides over it -->
 <div class="stack">
@@ -655,20 +888,19 @@
       <span class="num">01</span>
       <h3 class="display">Misión</h3>
       <p>Hacer que cuidar tu salud se sienta mejor.</p>
-      <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M85 140c-48-28-68-52-60-78 7-22 37-27 52-6l8 11 8-11c15-21 45-16 52 6 8 26-12 50-60 78z" stroke="#F7C9F3" stroke-width="8"/></svg>
+      <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M85 140c-48-28-68-52-60-78 7-22 37-27 52-6l8 11 8-11c15-21 45-16 52 6 8 26-12 50-60 78z" stroke="#cc33cc" stroke-width="8"/></svg>
     </article>
     <article class="mv__card mv__card--v">
       <span class="num">02</span>
       <h3 class="display">Visión</h3>
       <p>Inspirar una nueva cultura de salud consciente.</p>
-      <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M30 120c20-30 40 10 60-20s40 10 60-20M60 50l10-30M90 60l26-16M40 66l-18-22" stroke="#D94FD8" stroke-width="7"/></svg>
+      <svg class="corner" viewBox="0 0 170 170" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M30 120c20-30 40 10 60-20s40 10 60-20M60 50l10-30M90 60l26-16M40 66l-18-22" stroke="#cc33cc" stroke-width="7"/></svg>
     </article>
   </div>
   </div>
 </section>
 
 <!-- Culture -->
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true"><path fill="#721F86" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 <section class="culture" id="cultura">
   <div class="wrap culture__grid">
     <div class="culture__side">
@@ -676,7 +908,7 @@
       <h2 class="display scrub">Puntos de <span>cultura</span></h2>
       <p class="culture__intro scrub">Cinco principios que viven en cada toma de muestra, en cada resultado y en cada sonrisa al recibirte.</p>
       <!-- GIF CULTURA: reemplaza .ph__inner por <img src="assets/cultura.gif" alt="..."> -->
-      <figure class="ph ph--dark scrub" data-kind="gif" style="aspect-ratio:1;max-width:360px;margin-top:2rem"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__tag">GIF / video</span><span class="ph__title">Equipo haciendo un corazón con las manos</span><span class="ph__spec">Loop corto, divertido · 1:1, 800×800</span></div></figure>
+      <figure class="ph ph--dark scrub" data-kind="gif" style="aspect-ratio:4/3;max-width:440px;margin-top:2rem"><img src="assets/fotos/cultura-equipo.jpg" alt="Equipo Inovalab con uniforme frente al logo de la sucursal" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
     </div>
     <div class="values">
       <details class="value scrub" open><summary><span class="value__n">01</span><span class="value__t">Calidad</span><span class="value__plus" aria-hidden="true">+</span></summary><p>La calidad no se negocia, se vive en cada detalle.</p></details>
@@ -688,7 +920,6 @@
   </div>
 </section>
 </div>
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleY(-1)"><path fill="#721F86" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 
 <!-- Locations -->
 <section class="loc" id="sucursales">
@@ -700,16 +931,21 @@
       </div>
       <p class="reveal d2">Tres sucursales en el sur de Yucatán y servicio hasta donde estés. Agenda por WhatsApp; tus resultados llegan por la tarde vía WhatsApp o en físico si lo prefieres.</p>
     </div>
+    <div class="map__zones reveal" role="group" aria-label="Zona del mapa">
+      <button type="button" class="map__zone" data-zone="todo" aria-pressed="true">Todo</button>
+      <button type="button" class="map__zone" data-zone="sur" aria-pressed="false">Ticul, Oxkutzcab y Maní</button>
+      <button type="button" class="map__zone" data-zone="merida" aria-pressed="false">Mérida</button>
+    </div>
     <div class="loc__map reveal" id="mapa" role="region" aria-label="Mapa de sucursales y zonas de servicio a domicilio"></div>
     <div class="loc__legend reveal">
-      <span><svg viewBox="43 48 34 28"><path fill="#DD1FD6" stroke="#fff" stroke-width="1.5" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Servicio a domicilio y alrededores</span>
-      <span><svg viewBox="0 0 24 24"><path fill="#721F86" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>Sucursal</span>
-      <span><svg viewBox="0 0 24 24"><path fill="#721F86" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Sucursal con servicio a domicilio</span>
+      <span><svg viewBox="43 48 34 28"><path fill="#cc33cc" stroke="#fff" stroke-width="1.5" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Servicio a domicilio</span>
+      <span><svg viewBox="0 0 24 24"><path fill="#103587" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>Sucursal</span>
+      <span><svg viewBox="0 0 24 24"><path fill="#103587" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>Sucursal con servicio a domicilio</span>
     </div>
     <div class="loc__grid">
       <article class="town reveal pop">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Ticul</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
-        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Ticul</h3><small>Calle 28 x 27 y 29, Centro</small><small>L–S 7:00 am a 7:30 pm · D 7:00 am a 1:00 pm</small></div>
         <div class="town__links">
           <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Ticul%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
@@ -718,7 +954,7 @@
       </article>
       <article class="town reveal pop d1">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Oxkutzcab</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
-        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Oxkutzcab</h3><small>Calle 52 x 47 y 49, Centro</small></div>
         <div class="town__links">
           <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Oxkutzcab%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
@@ -727,7 +963,7 @@
       </article>
       <article class="town reveal pop d2">
         <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Peto</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
-        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#721F86"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+        <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Peto</h3><small>Calle 35 x 32 y 34, Centro</small></div>
         <div class="town__links">
           <a href="https://wa.me/529971251007?text=Hola%20Inovalab%20Peto%2C%20quiero%20agendar%20un%20estudio" target="_blank" rel="noopener">Agendar por WhatsApp →</a>
@@ -760,23 +996,6 @@
   </div>
 </section>
 
-<!-- Partners -->
-<section class="partner" id="alianzas">
-  <div class="wrap">
-    <div class="partner__box reveal">
-      <div>
-        <span class="eyebrow">Alianzas estratégicas</span>
-        <h2 class="display" style="margin-top:1rem">Crece con nosotros en el sector salud</h2>
-        <p>Expandimos nuestro modelo a través de alianzas, permitiendo que más emprendedores formen parte de este crecimiento y acerquen diagnóstico de calidad a más personas.</p>
-        <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20me%20interesa%20conocer%20el%20modelo%20de%20alianzas" class="btn btn--light" target="_blank" rel="noopener">Quiero ser aliado
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <!-- FOTO ALIANZAS: reemplaza .ph__inner por <img src="assets/fundadores.jpg" alt="..."> -->
-      <figure class="ph ph--dark partner__art" data-kind="foto" style="aspect-ratio:4/5;width:min(320px,100%)"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fundadores o socios aliados</span><span class="ph__spec">Retrato vertical · 4:5, 1080×1350</span></div></figure>
-    </div>
-  </div>
-</section>
 <!-- Comunidad: últimas publicaciones de Instagram/TikTok -->
 <section class="social">
   <div class="wrap">
@@ -784,21 +1003,32 @@
       <span class="eyebrow reveal">+8,000 personas nos siguen</span>
       <h2 class="display reveal d1">Únete a la <span>comunidad</span></h2>
     </div>
-    <!-- Reemplaza cada .ph__inner por la imagen/GIF del post (1:1, 1080×1080) y envuélvelo en <a href="enlace al post"> -->
-    <div class="social__grid reveal d2">
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__title">Tip de salud</span></div></figure>
-      <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__title">Detrás de cámaras</span></div></figure>
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__title">Paciente feliz</span></div></figure>
-      <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__title">Reel del equipo</span></div></figure>
-      <figure class="ph" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__title">Promoción del mes</span></div></figure>
-      <figure class="ph" data-kind="gif"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="ph__title">Testimonio</span></div></figure>
+    <!-- Reels de Instagram (videos originales, sin recomprimir) -->
+    <div class="social__reels reveal d2">
+      <figure class="ph reel"><video src="assets/videos/aniversario.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: 3er aniversario de Inovalab"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/inovatalks.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: apertura de InovaTalks"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/revelacion-genero.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: revelación de género en Inovalab"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/espacio-bienestar.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: tu espacio de bienestar en Inovalab"></video></figure>
     </div>
-    <div class="social__cta reveal d3"><a href="https://www.instagram.com/soyinovalab/" class="btn btn--ghost" target="_blank" rel="noopener">Síguenos en Instagram</a></div>
+    <div class="social__grid reveal d2">
+      <figure class="ph"><img src="assets/fotos/social-inauguracion.jpg" alt="Equipo y amigos de Inovalab celebrando una inauguración con el logo" loading="lazy" decoding="async" style="object-position:50% 45%"></figure>
+      <figure class="ph"><img src="assets/fotos/social-carrera-grupo.jpg" alt="Grupo de corredores con el logo de Inovalab" loading="lazy" decoding="async" style="object-position:50% 58%"></figure>
+      <figure class="ph"><img src="assets/fotos/social-modulo.jpg" alt="Módulo de Inovalab atendiendo en un evento" loading="lazy" decoding="async" style="object-position:55% 40%"></figure>
+      <figure class="ph"><img src="assets/fotos/social-cycling.jpg" alt="Asistentes de una clase de indoor cycling con el logo de Inovalab" loading="lazy" decoding="async" style="object-position:50% 40%"></figure>
+      <figure class="ph"><img src="assets/fotos/social-estrellamed.jpg" alt="Comunidad de Inovalab y EstrellaMed reunida frente a la sucursal" loading="lazy" decoding="async" style="object-position:50% 50%;transform:scale(1.35);transform-origin:50% 48%"></figure>
+      <figure class="ph"><img src="assets/fotos/social-carrera-amigos.jpg" alt="Tres corredores sosteniendo el logo de Inovalab" loading="lazy" decoding="async" style="object-position:40% 50%"></figure>
+    </div>
+    <div class="social__cta reveal d3">
+      <p>Síguenos en nuestras redes sociales</p>
+      <div class="social__links">
+        <a href="https://www.instagram.com/soyinovalab/" class="btn btn--blue" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
+        <a href="https://www.facebook.com/laboratorioinovalab" class="btn btn--blue" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.6 10 6.2V8H8v3.2h2V22h4V11.2h2.7L17 8h-3z"/></svg>Facebook</a>
+      </div>
+    </div>
   </div>
 </section>
 </main>
 
-<svg class="wave" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true"><path fill="#721F86" d="M0 28V14c40 0 40-14 80-14s40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14 40-14 80-14 40 14 80 14v14z"/></svg>
 <footer>
   <div class="wrap">
     <div class="foot__grid">
@@ -814,7 +1044,6 @@
           <li><a href="#filosofia">Filosofía</a></li>
           <li><a href="#cultura">Puntos de cultura</a></li>
           <li><a href="#empresas">Empresas</a></li>
-          <li><a href="#alianzas">Alianzas</a></li>
         </ul>
       </div>
       <div>
@@ -827,9 +1056,8 @@
           <li><a href="tel:+529971251007">997 125 1007</a></li>
           <li><a href="mailto:facturacion.inovalab@gmail.com">facturacion.inovalab@gmail.com</a></li>
         </ul>
-        <!-- TODO: enlace real de Facebook -->
         <div class="socials">
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.6 10 6.2V8H8v3.2h2V22h4V11.2h2.7L17 8h-3z"/></svg></a>
+          <a href="https://www.facebook.com/laboratorioinovalab" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.6 10 6.2V8H8v3.2h2V22h4V11.2h2.7L17 8h-3z"/></svg></a>
           <a href="https://www.instagram.com/soyinovalab/" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
         </div>
       </div>
@@ -884,7 +1112,33 @@
   });
   document.querySelectorAll('.split').forEach(splitWords);
 
-  document.querySelectorAll('.svc__tags span').forEach((tag, i) => tag.style.setProperty('--i', i));
+
+  // study catalog: a few studies per list, "show all" per list, one accent-insensitive search for both
+  const catSearch = document.querySelector('.cat__search');
+  const catCols = [...document.querySelectorAll('.cat__col')];
+  const plain = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const filterCat = () => {
+    const q = plain(catSearch.value.trim());
+    catCols.forEach(col => {
+      const open = q || col.dataset.open;
+      let shown = 0;
+      col.querySelectorAll('.cat__list').forEach(list => [...list.children].forEach((li, i) => {
+        li.hidden = (q && !plain(li.textContent).includes(q)) || (!open && i >= +list.dataset.limit);
+        if (!li.hidden) shown++;
+      }));
+      col.querySelectorAll('.cat__group').forEach(g => g.hidden = !g.querySelector('li:not([hidden])'));
+      col.querySelector('.cat__none').hidden = shown > 0;
+      const more = col.querySelector('.cat__more');
+      more.hidden = !!q;
+      more.textContent = col.dataset.open ? 'Ver menos' : more.dataset.label;
+    });
+  };
+  catCols.forEach(col => col.querySelector('.cat__more').addEventListener('click', () => {
+    if (col.dataset.open) delete col.dataset.open; else col.dataset.open = '1';
+    filterCat();
+  }));
+  catSearch.addEventListener('input', filterCat);
+  filterCat();
 
   // highlighted words in section titles get a hand-drawn underline
   document.querySelectorAll('h2.display span').forEach(s => {
@@ -937,6 +1191,12 @@
     card.style.setProperty('--o', offset);
     card.classList.toggle('is-active', offset === 0);
     card.classList.toggle('is-off', Math.abs(offset) > 2);
+    // videos keep looping; only the centered card has sound
+    const video = card.querySelector('video');
+    if (video) {
+      video.muted = offset !== 0;
+      video.play().catch(() => { video.muted = true; video.play(); });
+    }
   });
   document.querySelectorAll('.gallery__nav button').forEach(btn => btn.addEventListener('click', () => {
     current = (current + +btn.dataset.dir + cards.length) % cards.length;
@@ -944,12 +1204,12 @@
   }));
   placeCards();
 
-  // coverage map: heart = home service, drop = branch, drop with heart = both
+  // coverage map: heart = home service, drop = branch, drop with heart = branch with home service
   if (window.L) {
     const heart = 'M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z';
-    const drop = inner => `<svg viewBox="0 0 24 24"><path fill="#721F86" stroke="#fff" stroke-width=".8" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/>${inner}</svg>`;
+    const drop = inner => `<svg viewBox="0 0 24 24"><path fill="#103587" stroke="#fff" stroke-width=".8" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/>${inner}</svg>`;
     const icons = {
-      home: L.divIcon({ className: 'map-pin', iconSize: [36, 30], iconAnchor: [18, 29], popupAnchor: [0, -26], html: `<svg viewBox="43 48 34 28"><path fill="#DD1FD6" stroke="#fff" stroke-width="1.5" d="${heart}"/></svg>` }),
+      home: L.divIcon({ className: 'map-pin', iconSize: [36, 30], iconAnchor: [18, 29], popupAnchor: [0, -26], html: `<svg viewBox="43 48 34 28"><path fill="#cc33cc" stroke="#fff" stroke-width="1.5" d="${heart}"/></svg>` }),
       branch: L.divIcon({ className: 'map-pin', iconSize: [40, 40], iconAnchor: [20, 37], popupAnchor: [0, -32], html: drop('<circle cx="12" cy="9" r="2.6" fill="#fff"/>') }),
       both: L.divIcon({ className: 'map-pin', iconSize: [40, 40], iconAnchor: [20, 37], popupAnchor: [0, -32], html: drop(`<path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="${heart}"/>`) })
     };
@@ -957,36 +1217,72 @@
     const places = [
       { name: 'Ticul', at: [20.3945996, -89.5362132], kind: 'both', side: 'left', addr: 'Calle 28 x 27 y 29, Centro', maps: 'https://maps.app.goo.gl/VWRM7dNx7rCB385P8' },
       { name: 'Oxkutzcab', at: [20.304822, -89.4189584], kind: 'both', side: 'bottom', addr: 'Calle 52 x 47 y 49, Centro', maps: 'https://share.google/mQWrpxOisLAjBNYnq' },
-      { name: 'Peto', at: [20.1243796, -88.92481], kind: 'branch', side: 'top', addr: 'Calle 35 x 32 y 34, Centro', maps: 'https://share.google/lNYpVdPl3ni6xdniT' },
-      { name: 'Maní', at: [20.3867, -89.3919], kind: 'home', side: 'right' },
-      { name: 'Mérida', at: [20.9674, -89.5926], kind: 'home', side: 'right' }
+      { name: 'Peto', at: [20.1243796, -88.92481], kind: 'branch', side: 'top', addr: 'Calle 35 x 32 y 34, Centro', maps: 'https://share.google/lNYpVdPl3ni6xdniT' }
+    ];
+    // home-service places from the client's list, placed on their OpenStreetMap points: [name, lat, lng, zone]
+    const zones = ['Ticul, Oxkutzcab, Maní y alrededores', 'Mérida dentro del Periférico', 'Mérida fuera del Periférico y alrededores'];
+    const homes = [
+      ["Akil",20.26429,-89.34701,0], ["Chapab",20.45726,-89.45673,0], ["Choyob",20.53312,-89.69992,0], ["Chumayel",20.43098,-89.3018,0],
+      ["Citincabchén",20.51802,-89.53582,0], ["Dzán",20.38811,-89.4684,0], ["Emiliano Zapata",20.22608,-89.46791,0], ["Hunabchén",20.53332,-89.51356,0],
+      ["Huntochac",19.8048,-89.5001,0], ["Mama",20.47714,-89.36518,0], ["Maní",20.3874,-89.39197,0], ["Mayapán",20.46781,-89.21375,0],
+      ["Muna",20.48579,-89.71325,0], ["Plan Chac",20.45197,-89.6135,0], ["Pozo Nueve",20.34722,-89.46444,0], ["Pustunich",20.3674,-89.51017,0],
+      ["Sacalum",20.49589,-89.59027,0], ["San Antonio Sodzil",20.53787,-89.60561,0], ["San José Tipceh",20.46234,-89.67125,0], ["San Simón",20.21746,-89.80907,0],
+      ["Santa Elena",20.32876,-89.64392,0], ["Teabo",20.40023,-89.28272,0], ["Tekax",20.20523,-89.28585,0], ["Tekit",20.53426,-89.33341,0],
+      ["Tipikal",20.4065,-89.34237,0], ["Xohuayán",20.18718,-89.38408,0], ["Xul",20.10065,-89.46279,0], ["Yaxhá",20.53384,-89.6659,0],
+      ["Yaxhachén",20.05128,-89.56591,0], ["Yotholín",20.32722,-89.45308,0], ["Yunkú",20.57771,-89.60251,0], ["Altabrisa",21.02257,-89.58566,1],
+      ["Benito Juárez Norte",21.02403,-89.6155,1], ["Buenavista",21.00014,-89.61867,1], ["Campestre",21.01101,-89.6172,1], ["Centro",20.97181,-89.62703,1],
+      ["Chuburná de Hidalgo",21.00729,-89.63222,1], ["Francisco de Montejo",21.02744,-89.64797,1], ["Gonzalo Guerrero",21.02352,-89.62426,1], ["Itzimná",20.99185,-89.61076,1],
+      ["México",21.00229,-89.61068,1], ["México Norte",21.01292,-89.60623,1], ["Montebello",21.03047,-89.59636,1], ["Montes de Amé",21.03274,-89.61751,1],
+      ["Pensiones",21.00038,-89.65815,1], ["San Antonio Cucul",21.02259,-89.60412,1], ["San Ramón Norte",21.03195,-89.60681,1], ["Sodzil Norte",21.04365,-89.62196,1],
+      ["Vista Alegre Norte",21.0263,-89.57554,1], ["Xcumpich",21.03228,-89.63831,1], ["Acanceh",20.81325,-89.45294,2], ["Cabo Norte",21.05738,-89.59449,2],
+      ["Caucel",21.01682,-89.70636,2], ["Chablekal",21.09604,-89.57698,2], ["Chelem",21.26875,-89.74228,2], ["Chicxulub Pueblo",21.13646,-89.5172,2],
+      ["Cholul",21.04225,-89.55725,2], ["Conkal",21.07395,-89.52001,2], ["Dzityá",21.05056,-89.67899,2], ["Dzununcán",20.86591,-89.65408,2],
+      ["Gran Santa Fe",21.00192,-89.68322,2], ["Ixil",21.15211,-89.48146,2], ["Kanasín",20.93505,-89.55772,2], ["Komchén",21.10444,-89.66207,2],
+      ["La Ceiba",21.0948,-89.6215,2], ["La Rejoyada",21.12232,-89.68227,2], ["Las Américas",21.08851,-89.66885,2], ["Mocochá",21.10684,-89.45176,2],
+      ["Molas",20.81728,-89.6292,2], ["San José Tzal",20.8233,-89.66096,2], ["San Pedro Chimay",20.86575,-89.57865,2], ["San Pedro Cholul",21.02924,-89.54912,2],
+      ["Santa Gertrudis Copó",21.03938,-89.59452,2], ["Sierra Papacal",21.12441,-89.72997,2], ["Sitpach",21.02732,-89.52058,2], ["Temozón Norte",21.0646,-89.59623,2],
+      ["Timucuy",20.8102,-89.5143,2], ["Tixcuytún",21.06868,-89.56956,2], ["Tixkokob",21.00295,-89.39491,2], ["Tixpéual",20.97697,-89.44164,2],
+      ["Ucú",21.03105,-89.74558,2], ["Umán",20.88137,-89.74619,2], ["Xcanatún",21.07553,-89.62907,2], ["Xcunyá",21.13274,-89.61363,2],
+      ["Yaxkukul",21.06194,-89.41888,2], ["Zona Country",21.11974,-89.60023,2]
     ];
     const map = L.map('mapa', { scrollWheelZoom: false, dragging: !L.Browser.mobile, attributionControl: false, zoomSnap: .25 });
     L.control.attribution({ prefix: false }).addTo(map);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
-    const pulses = [];
     places.forEach(p => {
-      const home = p.kind !== 'branch';
-      if (home) {
-        L.circle(p.at, { radius: 12000, color: '#DD1FD6', weight: 1.5, fillColor: '#DD1FD6', fillOpacity: .14, interactive: false }).addTo(map);
-        pulses.push(L.circle(p.at, { radius: 12000, color: '#DD1FD6', weight: 2, fillColor: '#DD1FD6', fillOpacity: .22, interactive: false, className: 'map-pulse' }).addTo(map));
-      }
-      const title = p.addr ? 'Sucursal' + (home ? ' y servicio a domicilio' : '') : 'Servicio a domicilio y alrededores';
-      const links = (p.maps ? `<a href="${p.maps}" target="_blank" rel="noopener">Cómo llegar →</a>` : '') +
+      const links = `<a href="${p.maps}" target="_blank" rel="noopener">Cómo llegar →</a>` +
         `<a href="${wa}${encodeURIComponent(`Hola Inovalab ${p.name}, quiero agendar un estudio`)}" target="_blank" rel="noopener">Agendar por WhatsApp →</a>`;
-      L.marker(p.at, { icon: icons[p.kind], title: p.name, zIndexOffset: p.addr ? 100 : 0 }).addTo(map)
+      L.marker(p.at, { icon: icons[p.kind], title: p.name, zIndexOffset: 1000 }).addTo(map)
         .bindTooltip(p.name, { permanent: true, direction: p.side, offset: { top: [0, -36], bottom: [0, 2], left: [-16, -16], right: [16, -16] }[p.side] })
-        .bindPopup(`<b>${p.name}</b>${title}${p.addr ? `<br>${p.addr}` : ''}${links}`);
+        .bindPopup(`<b>${p.name}</b>Sucursal${p.kind === 'both' ? ' y servicio a domicilio' : ''}<br>${p.addr}${links}`);
     });
-    const fit = () => map.fitBounds(L.latLngBounds(places.map(p => p.at)), { paddingTopLeft: [70, 45], paddingBottomRight: [30, 35] });
+    homes.forEach(([name, lat, lng, zone], i) => {
+      const icon = L.divIcon({ className: 'map-pin map-heart', iconSize: [22, 19], iconAnchor: [11, 18], popupAnchor: [0, -15],
+        html: `<svg viewBox="43 48 34 28" style="animation-delay:-${(i * .37) % 2.4}s"><path fill="#cc33cc" stroke="#fff" stroke-width="1.5" d="${heart}"/></svg>` });
+      L.marker([lat, lng], { icon, title: name }).addTo(map)
+        .bindTooltip(name, { direction: 'top', offset: [0, -16] })
+        .bindPopup(`<b>${name}</b>Servicio a domicilio<br>${zones[zone]}<a href="${wa}${encodeURIComponent(`Hola Inovalab, quiero agendar un estudio a domicilio en ${name}`)}" target="_blank" rel="noopener">Agendar por WhatsApp →</a>`);
+    });
+    // zone buttons zoom the map; the chosen zone is kept when the width changes
+    const pts = list => list.map(h => [h[1], h[2]]);
+    const groups = {
+      todo: [...places.map(p => p.at), ...pts(homes)],
+      sur: [places[0].at, places[1].at, ...pts(homes.filter(h => h[3] === 0))],
+      merida: pts(homes.filter(h => h[3] > 0)),
+    };
+    let zone = 'todo';
+    const fit = () => map.fitBounds(L.latLngBounds(groups[zone]), { paddingTopLeft: [70, 45], paddingBottomRight: [30, 35] });
     map.on('resize', e => { if (e.newSize.x !== e.oldSize.x) fit(); });
     fit();
-    pulses.forEach((c, i) => c.getElement().style.animationDelay = `${i * .8}s`); // each zone beats on its own
+    const zoneBtns = document.querySelectorAll('.map__zone');
+    zoneBtns.forEach(btn => btn.addEventListener('click', () => {
+      zone = btn.dataset.zone;
+      zoneBtns.forEach(b => b.setAttribute('aria-pressed', b === btn));
+      map.flyToBounds(L.latLngBounds(groups[zone]), { paddingTopLeft: [70, 45], paddingBottomRight: [30, 35], duration: .8 });
+    }));
   }
 
-  // waves drift sideways and the hero art shifts slightly with the scroll
+  // the hero art shifts slightly with the scroll
   if (!matchMedia('(prefers-reduced-motion:reduce)').matches) {
-    const waves = document.querySelectorAll('.wave');
     const photo = document.querySelector('.hero__photo');
     const badge = document.querySelector('.badge-spin');
     const navBar = document.getElementById('nav');
@@ -994,9 +1290,7 @@
     const scrubs = document.querySelectorAll('.scrub');
     let ticking = false;
     const update = () => {
-      const y = scrollY, period = waves[0].clientWidth / 9; // one wave = 160 of 1440 units
-      const x = -(y * .12 % period);
-      waves.forEach((w, i) => w.style.translate = `${i % 2 ? -period - x : x}px 0`);
+      const y = scrollY;
       // pinned sections rest under the nav (or by their bottom edge if taller than the screen)
       // and fade as the next one covers them
       stacks.forEach(({ pin, inner, cover }) => {
@@ -1028,6 +1322,9 @@
   }
 
   document.getElementById('yr').textContent = new Date().getFullYear();
+  // reels: play while visible, pause when off screen
+  const reelIO = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: .4 });
+  document.querySelectorAll(".social__reels video").forEach(v => reelIO.observe(v));
 </script>
 </body>
 </html>
