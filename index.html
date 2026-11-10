@@ -427,6 +427,44 @@
   .social__links{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem}
   .social__links svg{width:20px;height:20px}
 
+  /* testimonials */
+  .tst{padding:clamp(1rem,3vw,2rem) 0 clamp(4rem,8vw,6rem)}
+  .tst__box{--lime:#c4e04f;position:relative;overflow:hidden;background:var(--navy);color:#fff;border-radius:40px;border:3px solid var(--navy);box-shadow:0 10px 0 var(--magenta);padding:clamp(2.4rem,5vw,4.4rem) clamp(1.4rem,5vw,4.4rem);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2.4rem,5vw,4.5rem);align-items:center;isolation:isolate}
+  .tst__loop{position:absolute;inset:-10% -5% auto auto;width:min(820px,110%);z-index:-1;opacity:.55;pointer-events:none}
+  .tst__loop path{fill:none;stroke:#7a2fb8;stroke-width:46;stroke-linecap:round}
+  .tst__quote{position:absolute;right:clamp(1rem,4vw,3rem);top:clamp(.6rem,2vw,1.4rem);font-family:Georgia,serif;font-size:clamp(7rem,14vw,12rem);line-height:1;color:var(--lime);opacity:.9;z-index:-1;pointer-events:none}
+  .tst__media{position:relative;justify-self:center;width:100%;max-width:420px}
+  .tst__photo{aspect-ratio:3/4;border:4px solid #fff;border-radius:32px;box-shadow:0 10px 0 var(--magenta);rotate:-3deg;transition:rotate .5s var(--ease)}
+  .tst__photo img{object-position:50% 40%}
+  .tst__media:hover .tst__photo{rotate:0deg}
+  .tst__badge{position:absolute;right:-6%;bottom:9%;z-index:2;background:var(--lime);color:var(--navy);border:2px solid var(--navy);border-radius:999px;box-shadow:0 5px 0 var(--navy);padding:.6rem 1.1rem;font-weight:700;font-size:.85rem;line-height:1.2;display:flex;flex-direction:column;align-items:center;rotate:6deg;animation:float 6s ease-in-out infinite}
+  .tst__badge span{font-size:1.15rem;letter-spacing:.12em;color:var(--navy)}
+  .tst__head .eyebrow{color:var(--lime)}
+  .tst__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);margin:.8rem 0 .6rem}
+  .tst__head h2 span{color:var(--lime)}
+  .tst__head h2 .scribble path{stroke:var(--magenta)}
+  .tst__head p{max-width:46ch;opacity:.9}
+  .tst__cards{display:grid;gap:1.4rem;margin-top:2rem}
+  .rv{position:relative;background:#fff;color:#2b2f3a;border:2px solid var(--navy);border-radius:24px;box-shadow:0 8px 0 var(--magenta);padding:1.4rem 1.5rem 1.5rem;rotate:-1.2deg;transition:rotate .35s var(--ease), translate .35s var(--ease), box-shadow .35s}
+  .rv:nth-child(2){rotate:1.4deg;margin-left:clamp(0rem,5vw,3.5rem);box-shadow:0 8px 0 var(--lime)}
+  .tst .rv:hover{rotate:0deg;translate:0 -6px}
+  .tst .rv.done{transition:rotate .35s var(--ease), translate .35s var(--ease), box-shadow .35s}
+  .rv__top{display:flex;align-items:center;gap:.9rem}
+  .rv__av{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:1.25rem;color:#fff;background:linear-gradient(135deg,var(--blue),var(--magenta))}
+  .rv:nth-child(2) .rv__av{background:linear-gradient(135deg,var(--magenta),#ff7ab8)}
+  .rv__who{line-height:1.25}
+  .rv__who b{display:block;color:var(--navy);font-size:1rem}
+  .rv__who small{color:#6b7280;font-size:.8rem}
+  .rv__g{margin-left:auto;width:26px;height:26px;flex:none}
+  .rv__stars{display:flex;gap:2px;margin:.8rem 0 .55rem;color:#fbbc04;font-size:1.25rem;line-height:1}
+  .rv__stars i{font-style:normal;display:inline-block;scale:0;rotate:-40deg;transition:scale .45s cubic-bezier(.34,1.8,.64,1), rotate .45s var(--ease);transition-delay:calc(var(--s)*110ms + .45s)}
+  .rv.in .rv__stars i{scale:1;rotate:0deg}
+  .rv p{font-size:1rem;line-height:1.55}
+  .rv p::before{content:"“";font-family:Georgia,serif;color:var(--magenta);font-size:2.2rem;line-height:0;vertical-align:-.45em;margin-right:.15rem}
+  .tst__cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+  .tst__cta .btn--primary{background:var(--lime);color:var(--navy);border-color:var(--navy);box-shadow:0 4px 0 var(--magenta)}
+  .tst__cta .btn--primary:hover{box-shadow:0 6px 0 var(--magenta)}
+
   /* floating whatsapp */
   .wa{position:fixed;right:20px;bottom:20px;z-index:50;width:62px;height:62px;border-radius:50%;background:var(--magenta);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 8px 24px rgba(16,53,135,.3);transition:transform .2s}
   .wa:hover{transform:scale(1.08)}
@@ -470,6 +508,7 @@
     .mv__card{margin-right:0}
     .mv__card[aria-hidden]{display:none}
     .scribble{clip-path:none}
+    .rv__stars i{scale:1;rotate:none}
     .draw path{stroke-dashoffset:0}
   }
 
@@ -484,7 +523,8 @@
     .nav.open .nav__toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
     .nav.open .nav__toggle span:nth-child(2){opacity:0}
     .nav.open .nav__toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-    .hero__grid,.about__grid,.philo__grid,.culture__grid,.biz__box{grid-template-columns:1fr}
+    .hero__grid,.about__grid,.philo__grid,.culture__grid,.biz__box,.tst__box{grid-template-columns:1fr}
+    .tst__media{max-width:340px}
     .hero__art{max-width:400px}
     .culture__side{position:static}
     .foot__grid{grid-template-columns:1fr 1fr}
@@ -1026,6 +1066,50 @@
   </div>
 </section>
 
+<!-- Testimonios: reseñas reales de Google -->
+<section class="tst" id="testimonios">
+  <div class="wrap">
+    <div class="tst__box reveal">
+      <svg class="tst__loop" viewBox="0 0 800 600" aria-hidden="true"><path d="M60 520C140 300 300 60 420 90s-40 300-120 380 60 60 180-80 220-300 280-240-20 260-120 360"/></svg>
+      <span class="tst__quote" aria-hidden="true">“</span>
+      <div class="tst__media reveal from-l">
+        <figure class="ph tst__photo"><img src="assets/fotos/testimonio-pacientes-felices.webp" alt="Familia sonriendo con el logo de Inovalab: pacientes felices" loading="lazy" decoding="async"></figure>
+        <div class="tst__badge"><span>★★★★★</span>Reseñas reales</div>
+      </div>
+      <div>
+        <div class="tst__head">
+          <span class="eyebrow reveal">Testimonios</span>
+          <h2 class="display reveal d1">Lo que dicen nuestros <span>pacientes</span></h2>
+          <p class="reveal d2">Reseñas reales de quienes ya confiaron su salud en nosotros.</p>
+        </div>
+        <div class="tst__cards">
+          <figure class="rv reveal from-r d1">
+            <div class="rv__top">
+              <span class="rv__av" aria-hidden="true">M</span>
+              <figcaption class="rv__who"><b>Maria Canche Santos</b><small>Reseña en Google</small></figcaption>
+              <svg class="rv__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.8 6C12.4 13.7 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 2.9-2.2 5.4-4.7 7.1l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.5z"/><path fill="#FBBC05" d="M10.5 28.8c-.5-1.5-.8-3.1-.8-4.8s.3-3.3.8-4.8l-7.8-6C1 16.5 0 20.1 0 24s1 7.5 2.7 10.8l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>
+            </div>
+            <div class="rv__stars" role="img" aria-label="5 de 5 estrellas"><i style="--s:0">★</i><i style="--s:1">★</i><i style="--s:2">★</i><i style="--s:3">★</i><i style="--s:4">★</i></div>
+            <p>Buen servicio, amabilidad y confianza en el trato. Desde el personal, hasta el médico. Lo recomiendo.</p>
+          </figure>
+          <figure class="rv reveal from-r d2">
+            <div class="rv__top">
+              <span class="rv__av" aria-hidden="true">M</span>
+              <figcaption class="rv__who"><b>Mariana Ruiz Garcia</b><small>Reseña en Google</small></figcaption>
+              <svg class="rv__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.8 6C12.4 13.7 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 2.9-2.2 5.4-4.7 7.1l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.5z"/><path fill="#FBBC05" d="M10.5 28.8c-.5-1.5-.8-3.1-.8-4.8s.3-3.3.8-4.8l-7.8-6C1 16.5 0 20.1 0 24s1 7.5 2.7 10.8l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>
+            </div>
+            <div class="rv__stars" role="img" aria-label="5 de 5 estrellas"><i style="--s:0">★</i><i style="--s:1">★</i><i style="--s:2">★</i><i style="--s:3">★</i><i style="--s:4">★</i></div>
+            <p>Mi experiencia ha sido maravillosa: buena atención, precios accesibles, personal atento, resultados confiables y resultados rápidos. Mi familia y yo muy contentos de contar con un laboratorio de confianza y seriedad.</p>
+          </figure>
+        </div>
+        <div class="tst__cta reveal d3">
+          <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20estudio" class="btn btn--primary" target="_blank" rel="noopener">Vive la experiencia Inovalab</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Business -->
 <section class="biz" id="empresas">
   <div class="wrap">
@@ -1055,12 +1139,12 @@
       <span class="eyebrow reveal">+8,000 personas nos siguen</span>
       <h2 class="display reveal d1">Únete a la <span>comunidad</span></h2>
     </div>
-    <!-- Reels de Instagram (videos originales, sin recomprimir) -->
+    <!-- Reels de Instagram (comprimidos a 720p; sin pantalla completa) -->
     <div class="social__reels reveal d2">
-      <figure class="ph reel"><video src="assets/videos/aniversario.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: 3er aniversario de Inovalab"></video></figure>
-      <figure class="ph reel"><video src="assets/videos/inovatalks.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: apertura de InovaTalks"></video></figure>
-      <figure class="ph reel"><video src="assets/videos/revelacion-genero.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: revelación de género en Inovalab"></video></figure>
-      <figure class="ph reel"><video src="assets/videos/espacio-bienestar.mp4" muted loop playsinline controls preload="metadata" aria-label="Reel: tu espacio de bienestar en Inovalab"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/servicio-domicilio.mp4" muted loop playsinline controls controlsList="nofullscreen nodownload noremoteplayback" disablePictureInPicture preload="metadata" aria-label="Reel: llegamos hasta la comodidad de tu hogar"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/muestra-orina.mp4" muted loop playsinline controls controlsList="nofullscreen nodownload noremoteplayback" disablePictureInPicture preload="metadata" aria-label="Reel: cómo tomar la muestra de orina"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/area-pediatrica.mp4" muted loop playsinline controls controlsList="nofullscreen nodownload noremoteplayback" disablePictureInPicture preload="metadata" aria-label="Reel: recorrido por el área infantil de Inovalab"></video></figure>
+      <figure class="ph reel"><video src="assets/videos/tu-espacio-bienestar.mp4" muted loop playsinline controls controlsList="nofullscreen nodownload noremoteplayback" disablePictureInPicture preload="metadata" aria-label="Reel: tu espacio de bienestar en Inovalab"></video></figure>
     </div>
     <div class="social__grid reveal d2">
       <figure class="ph"><img src="assets/fotos/social-inauguracion.jpg" alt="Equipo y amigos de Inovalab celebrando una inauguración con el logo" loading="lazy" decoding="async" style="object-position:50% 45%"></figure>
@@ -1376,7 +1460,7 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
   // reels: play while visible, pause when off screen
   const reelIO = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: .4 });
-  document.querySelectorAll(".social__reels video").forEach(v => reelIO.observe(v));
+  document.querySelectorAll(".social__reels video").forEach(v => { reelIO.observe(v); v.addEventListener("dblclick", e => e.preventDefault()); });
 </script>
 </body>
 </html>
