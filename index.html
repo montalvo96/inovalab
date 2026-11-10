@@ -212,6 +212,27 @@
   .town__links{margin-top:auto;display:grid;justify-items:start;gap:.3rem}
   .town a{font-weight:600;font-size:.9rem;color:var(--magenta);display:inline-flex;align-items:center;gap:.4rem}
   .town a:hover{gap:.7rem}
+  .soon{margin-top:1.1rem;display:grid;grid-template-columns:1.1fr 1fr;gap:1.5rem;align-items:center;background:#fff;border:2px solid var(--navy);border-radius:var(--radius);padding:1rem;box-shadow:0 6px 0 var(--navy);transition:transform .25s, box-shadow .25s}
+  .soon:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--blue)}
+  .soon__photo{aspect-ratio:1060/850;border-radius:18px;padding:0;margin:0}
+  .soon__body{padding:.5rem 1rem;display:grid;justify-items:start;gap:.7rem}
+  .soon__tag{background:var(--magenta);color:#fff;font-weight:600;font-size:.8rem;border-radius:999px;padding:.25rem .8rem}
+  .soon h3{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1;color:var(--navy)}
+  .soon p{color:#103587;max-width:380px}
+  .soon a{font-weight:600;color:var(--magenta)}
+  .home{grid-column:1/-1;display:grid;grid-template-columns:minmax(200px,300px) 1fr auto;gap:1.5rem;align-items:center;background:var(--blue);color:#fff;border-radius:18px;padding:1.4rem 1.6rem}
+  .home__road{position:relative;height:90px;border-bottom:3px dashed rgba(255,255,255,.55);overflow:hidden}
+  .home__car{position:absolute;bottom:2px;left:0;width:110px;animation:drive 5s var(--ease,ease-in-out) infinite}
+  .home__wheel{transform-box:fill-box;transform-origin:center;animation:spin .6s linear infinite}
+  .home__pin{position:absolute;right:0;bottom:6px;width:40px;animation:float 2.4s ease-in-out infinite}
+  @keyframes drive{0%{left:-120px}55%,85%{left:calc(100% - 160px);opacity:1}100%{left:calc(100% - 160px);opacity:0}}
+  .home__tag{display:inline-block;background:#fff;color:var(--magenta);font-weight:700;font-size:.78rem;border-radius:999px;padding:.2rem .75rem}
+  .home h4{font-family:"Cooper Lt BT";font-weight:400;font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.05;margin:.5rem 0 .3rem}
+  .soon .home p{color:#fff;opacity:.92;max-width:440px}
+  .soon a.home__btn{color:#fff;font-size:1.15rem;padding:1.1rem 2rem;border-color:#fff}
+  .home__btn svg{width:22px;height:22px}
+  @media (max-width:900px){.home{grid-template-columns:1fr}.home__road{max-width:320px;width:100%}.home__btn{width:100%}}
+  @media (max-width:760px){.soon{grid-template-columns:1fr}.soon__body{padding:.2rem .4rem .6rem}.home{padding:1.2rem}}
 
   /* ---------- coverage map ---------- */
   .loc__map{height:clamp(420px,42vw,520px);isolation:isolate;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:0 6px 0 var(--navy);overflow:hidden;background:var(--white);scroll-margin-top:110px}
@@ -944,7 +965,7 @@
     </div>
     <div class="loc__grid">
       <article class="town reveal pop">
-        <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Ticul</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
+        <figure class="ph town__photo"><img src="assets/fotos/sucursal-ticul.webp" alt="Fachada de la sucursal Inovalab Ticul junto al Centro Médico Ticul" loading="lazy" decoding="async" style="object-position:50% 62%"></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Ticul</h3><small>Calle 28 x 27 y 29, Centro</small><small>L–S 7:00 am a 7:30 pm · D 7:00 am a 1:00 pm</small></div>
         <div class="town__links">
@@ -953,7 +974,7 @@
         </div>
       </article>
       <article class="town reveal pop d1">
-        <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Oxkutzcab</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
+        <figure class="ph town__photo"><img src="assets/fotos/sucursal-oxkutzcab.webp" alt="Fachada de la sucursal Inovalab Oxkutzcab de noche" loading="lazy" decoding="async" style="object-position:50% 45%"></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Oxkutzcab</h3><small>Calle 52 x 47 y 49, Centro</small></div>
         <div class="town__links">
@@ -962,7 +983,7 @@
         </div>
       </article>
       <article class="town reveal pop d2">
-        <figure class="ph town__photo" data-kind="foto"><div class="ph__inner"><span class="ph__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span><span class="ph__tag">Foto</span><span class="ph__title">Fachada Peto</span><span class="ph__spec">4:3 · 800×600</span></div></figure>
+        <figure class="ph town__photo"><img src="assets/fotos/sucursal-peto.webp" alt="Fachada de la sucursal Inovalab Peto" loading="lazy" decoding="async" style="object-position:50% 35%"></figure>
         <div class="town__pin"><svg viewBox="0 0 24 24" fill="#103587"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><h3>Peto</h3><small>Calle 35 x 32 y 34, Centro</small></div>
         <div class="town__links">
@@ -971,6 +992,37 @@
         </div>
       </article>
     </div>
+    <article class="soon reveal pop">
+      <figure class="ph soon__photo"><img src="assets/fotos/sucursal-merida-pronto.jpg" alt="Sucursal Mérida, ¡muy pronto!" loading="lazy" decoding="async"></figure>
+      <div class="soon__body">
+        <span class="soon__tag">Próxima apertura</span>
+        <h3>Mérida</h3>
+        <p>Estamos preparando nuestra nueva sucursal en Mérida. Mientras abrimos, ya te atendemos a domicilio en la ciudad.</p>
+        <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20que%20me%20avisen%20cuando%20abra%20la%20sucursal%20M%C3%A9rida" target="_blank" rel="noopener">Avísame cuando abra →</a>
+      </div>
+      <div class="home">
+        <div class="home__road" aria-hidden="true">
+          <svg class="home__car" viewBox="0 0 120 60">
+            <path d="M8 40V22a6 6 0 0 1 6-6h52l18 12h14a8 8 0 0 1 8 8v4a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#fff" stroke="#103587" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M68 19l13 9H68z" fill="#cfe0ff" stroke="#103587" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M40 38c-6-3.5-8.5-6.5-7.5-10 1-3 4.5-3.5 6.5-.5l1 1.5 1-1.5c2-3 5.5-2.5 6.5.5 1 3.5-1.5 6.5-7.5 10z" fill="#cc33cc"/>
+            <rect x="102" y="31" width="5" height="4" rx="1.5" fill="#ffd34d"/>
+            <g class="home__wheel"><circle cx="28" cy="46" r="8" fill="#103587"/><circle cx="28" cy="46" r="3" fill="#fff"/><path d="M28 39v14M21 46h14" stroke="#fff" stroke-width="1.5"/></g>
+            <g class="home__wheel"><circle cx="88" cy="46" r="8" fill="#103587"/><circle cx="88" cy="46" r="3" fill="#fff"/><path d="M88 39v14M81 46h14" stroke="#fff" stroke-width="1.5"/></g>
+          </svg>
+          <svg class="home__pin" viewBox="0 0 24 24"><path fill="#cc33cc" stroke="#fff" stroke-width="1.5" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path fill="#fff" transform="translate(12 9) scale(.27) translate(-60 -62)" d="M60 74c-12-7-17-13-15-20 2-6 9-7 13-1l2 3 2-3c4-6 11-5 13 1 2 7-3 13-15 20z"/></svg>
+        </div>
+        <div class="home__text">
+          <span class="home__tag">Ya disponible en Mérida</span>
+          <h4>Servicio a domicilio</h4>
+          <p>Vamos a tu casa u oficina a tomar tus muestras, dentro y fuera del Periférico. Sin filas, sin traslados.</p>
+        </div>
+        <a class="btn btn--primary home__btn rock" href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20servicio%20a%20domicilio%20en%20M%C3%A9rida" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>
+          Agenda a domicilio
+        </a>
+      </div>
+    </article>
   </div>
 </section>
 
