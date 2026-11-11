@@ -6,6 +6,7 @@
 <title>Inovalab · Análisis para tu bienestar</title>
 <meta name="description" content="Análisis clínicos y ultrasonido en Ticul, Oxkutzcab y Peto, con servicio a domicilio en Yucatán. Ciencia, tecnología y trato humano para que cuidar tu salud se sienta mejor.">
 <link rel="icon" href="assets/inovalab-logo.png">
+<link rel="preload" as="image" href="assets/inovalab-corazon.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -71,6 +72,25 @@
   .hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--navy)}
   .hero__lead{font-size:clamp(1.05rem,1.4vw,1.2rem);max-width:520px;color:#103587}
   .hero__ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
+  .hero__call{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.6rem;padding:.35rem 1.1rem .35rem .35rem;border-radius:999px;background:rgba(204,51,204,.08);color:var(--navy);transition:background .25s}
+  .hero__call:hover{background:rgba(204,51,204,.16)}
+  .hero__call-ico{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--magenta);color:#fff;flex:none;animation:callRing 4s ease-in-out infinite}
+  .hero__call-ico svg{width:18px;height:18px}
+  .hero__call-txt{display:flex;flex-direction:column;line-height:1.15}
+  .hero__call-txt small{font-size:.75rem;font-weight:500;opacity:.75}
+  .hero__call-txt b{font-size:1.05rem;font-weight:700;letter-spacing:.02em}
+  @keyframes callRing{0%,86%,100%{rotate:0deg}89%{rotate:-14deg}92%{rotate:12deg}95%{rotate:-8deg}}
+  @media (prefers-reduced-motion:reduce){.hero__call-ico{animation:none}}
+  /* Enlace de llamada discreto que se repite en algunas secciones */
+  .call{display:inline-flex;align-items:center;gap:.5rem;font-weight:500;font-size:.92rem;color:inherit;line-height:1.2}
+  .call i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--magenta);color:#fff;flex:none;transition:scale .2s}
+  .call i svg{width:14px;height:14px}
+  .call b{font-weight:700;white-space:nowrap;background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .3s var(--ease)}
+  .call:hover b{background-size:100% 2px}
+  .call:hover i{scale:1.1}
+  .call--light i{background:#fff;color:var(--magenta)}
+  .soon .home a.call{color:#fff;font-weight:500}
+  .tst__cta{align-items:center}
   .hero__art{position:relative;aspect-ratio:7/6;max-width:660px;justify-self:end;width:100%}
   .blob{position:absolute;inset:6%;background:var(--navy);border-radius:46% 54% 42% 58%/52% 44% 56% 48%;animation:morph 12s ease-in-out infinite}
   @keyframes morph{50%{border-radius:58% 42% 55% 45%/42% 58% 42% 58%}}
@@ -78,6 +98,7 @@
   .sticker b{font-family:"Cooper Lt BT";font-size:1.5rem;font-weight:400;color:var(--magenta);line-height:1}
   .sticker--a{left:-8%;bottom:-4%;transform:rotate(-6deg);animation:float 6s ease-in-out infinite}
   .sticker--b{right:-3%;top:4%;transform:rotate(5deg);animation:float 7s ease-in-out infinite reverse}
+  .sticker--c{left:-12%;top:20%;transform:rotate(-4deg);animation:float 6.5s ease-in-out infinite;animation-delay:-2s}
   @keyframes float{50%{translate:0 -10px}}
   .badge-spin{position:absolute;right:1%;bottom:-3%;width:110px;height:110px;animation:spin 18s linear infinite}
   @keyframes spin{to{rotate:360deg}}
@@ -200,6 +221,7 @@
   .loc__head h2{font-size:clamp(2.2rem,4.2vw,3.6rem);color:var(--navy);margin-top:1rem}
   .loc__head h2 span{color:var(--magenta)}
   .loc__head p{max-width:400px;color:#103587}
+  .loc__head .call{margin-top:.8rem;color:var(--navy)}
   .loc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
   .town{background:#fff;border:2px solid var(--navy);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;min-height:260px;transition:transform .25s, box-shadow .25s;box-shadow:0 6px 0 var(--navy)}
   .town:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--blue)}
@@ -471,6 +493,22 @@
   .wa svg{width:30px;height:30px}
 
   /* reveal */
+  /* Pantalla de carga: el corazón se rellena de abajo hacia arriba según el progreso */
+  .loader{position:fixed;inset:0;z-index:9999;background:#fff;display:grid;place-content:center;justify-items:center;gap:1.4rem;transition:opacity .6s ease .15s, visibility 0s linear .75s}
+  .loader__heart{position:relative;width:clamp(96px,22vw,150px);aspect-ratio:973/1104;animation:loaderBeat 1.6s ease-in-out infinite}
+  .loader__heart img{position:absolute;inset:0;width:100%;height:100%}
+  .loader__base{filter:grayscale(1);opacity:.14}
+  .loader__fill{clip-path:inset(calc(100% - var(--p,0) * 1%) 0 0 0)}
+  .loader__pct{font:600 .95rem/1 "Poppins",system-ui,sans-serif;color:var(--navy);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+  .loader.is-done{opacity:0;visibility:hidden;pointer-events:none}
+  .loader.is-done .loader__heart{animation:loaderOut .7s var(--ease) forwards}
+  @keyframes loaderBeat{50%{scale:1.05}}
+  @keyframes loaderOut{to{scale:1.35;opacity:0}}
+  html.is-loading{overflow:hidden}
+  html.is-loaded .nav, html.is-loaded main{animation:pageIn .9s var(--ease) backwards}
+  html.is-loaded main{animation-delay:.08s}
+  @keyframes pageIn{from{opacity:0;translate:0 24px}}
+  @media (prefers-reduced-motion:reduce){.loader__heart{animation:none}html.is-loaded .nav,html.is-loaded main{animation:none}}
   .reveal{opacity:0;translate:0 28px;transition:opacity .9s ease, translate .9s var(--ease), scale .9s var(--ease), rotate .9s var(--ease)}
   .reveal.from-l{translate:-32px 0}
   .reveal.from-r{translate:32px 0}
@@ -539,7 +577,7 @@
     .deco{display:none}
     .ps__arrow{top:50%;rotate:90deg}
     .nav__logo img{height:30px}
-    .sticker--a{left:0}.sticker--b{right:0}
+    .sticker--a{left:0}.sticker--b{right:0}.sticker--c{left:0;top:16%}
     .badge-spin{width:92px;height:92px}
     .value p{padding-left:1.4rem}
     .mv__card{min-height:auto;gap:2rem}
@@ -562,6 +600,59 @@
     <span>Ticul</span><span>Oxkutzcab</span><span>Peto</span><span>Análisis para tu bienestar</span><span>Resultados confiables</span><span>Trato humano</span>
   </div>
 </div>
+
+<!-- Pantalla de carga -->
+<div class="loader" id="loader" role="status" aria-live="polite" aria-label="Cargando Inovalab">
+  <div class="loader__heart">
+    <img class="loader__base" src="assets/inovalab-corazon.webp" alt="" aria-hidden="true">
+    <img class="loader__fill" src="assets/inovalab-corazon.webp" alt="">
+  </div>
+  <span class="loader__pct" id="loaderPct">0%</span>
+</div>
+<script>
+  // Progreso real (imágenes que no son lazy + carga completa de la página), con tope de 4 s
+  // para que nunca se quede esperando. ?static omite la pantalla de carga.
+  (function () {
+    var root = document.documentElement, loader = document.getElementById('loader'), pct = document.getElementById('loaderPct');
+    var ready = window.inovaReady = new Promise(function (resolve) { window.__inovaResolve = resolve; });
+    if (location.search.indexOf('static') > -1) { loader.remove(); root.classList.add('is-loaded'); window.__inovaResolve(); return; }
+    root.classList.add('is-loading');
+    var MIN_MS = 2200, shown = 0, target = 8, finished = false, t0 = performance.now();
+    var setTarget = function (v) { target = Math.max(target, Math.min(v, 100)); };
+    var track = function () {
+      var imgs = [].filter.call(document.images, function (i) { return i.loading !== 'lazy' && !i.closest('.loader'); });
+      var done = imgs.filter(function (i) { return i.complete; }).length;
+      setTarget(15 + 75 * (imgs.length ? done / imgs.length : 1));
+      imgs.forEach(function (i) { if (!i.complete) i.addEventListener('load', track, { once: true }), i.addEventListener('error', track, { once: true }); });
+    };
+    document.addEventListener('DOMContentLoaded', function () { setTarget(40); track(); });
+    window.addEventListener('load', function () { setTarget(100); });
+    setTimeout(function () { setTarget(100); }, 4000);
+    var tick = function (now) {
+      // nunca llega al 100 antes de tiempo, y avanza solo mientras espera para no verse congelado
+      if (target < 100 && now - t0 > 300) setTarget(target + 0.15);
+      shown += Math.max((target - shown) * 0.09, target > shown ? 0.4 : 0);
+      if (shown > target) shown = target;
+      // ritmo mínimo: el relleno completo nunca tarda menos de MIN_MS, aunque la página cargue al instante
+      shown = Math.min(shown, (now - t0) / MIN_MS * 100);
+      loader.style.setProperty('--p', shown.toFixed(1));
+      pct.textContent = Math.round(shown) + '%';
+      if (shown >= 100 && !finished) {
+        finished = true;
+        setTimeout(function () {
+          loader.classList.add('is-done');
+          root.classList.remove('is-loading');
+          root.classList.add('is-loaded');
+          window.__inovaResolve();
+          setTimeout(function () { loader.remove(); }, 900);
+        }, 250);
+        return;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  })();
+</script>
 
 <!-- Nav -->
 <header class="nav wrap" id="nav">
@@ -605,6 +696,10 @@
         </a>
         <a href="#nosotros" class="btn btn--ghost">Conócenos</a>
       </div>
+      <a class="hero__call reveal d3" href="tel:+529971251007" aria-label="Llamar a Inovalab al 997 125 1007">
+        <span class="hero__call-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+        <span class="hero__call-txt"><small>¿Dudas? Llámanos</small><b>997 125 1007</b></span>
+      </a>
     </div>
 
     <div class="hero__art reveal d2">
@@ -612,7 +707,8 @@
       <figure class="ph hero__photo" data-kind="foto">
         <img src="assets/fotos/hero-corazon.jpg" alt="Niña y especialista de Inovalab formando un corazón con las manos" fetchpriority="high" style="object-position:50% 35%">
       </figure>
-      <div class="sticker sticker--a"><b>+5,000</b>pacientes<br>atendidos</div>
+      <div class="sticker sticker--a"><b>+5,000</b>pacientes<br>felices</div>
+      <div class="sticker sticker--c"><b>+20</b>puntos a los<br>que llegamos</div>
       <div class="sticker sticker--b"><b>3</b>sucursales<br>en Yucatán</div>
       <svg class="badge-spin" viewBox="0 0 120 120">
         <circle cx="60" cy="60" r="58" fill="#cc33cc" stroke="#103587" stroke-width="3"/>
@@ -990,7 +1086,10 @@
         <span class="eyebrow reveal">Sucursales</span>
         <h2 class="display reveal d1">Estamos <span>cerca</span> de ti</h2>
       </div>
-      <p class="reveal d2">Tres sucursales en el sur de Yucatán y servicio hasta donde estés. Agenda por WhatsApp; tus resultados llegan por la tarde vía WhatsApp o en físico si lo prefieres.</p>
+      <div class="reveal d2">
+        <p>Tres sucursales en el sur de Yucatán y servicio hasta donde estés. Agenda por WhatsApp; tus resultados llegan por la tarde vía WhatsApp o en físico si lo prefieres.</p>
+        <a class="call" href="tel:+529971251007"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i>¿Prefieres llamar? <b>997 125 1007</b></a>
+      </div>
     </div>
     <div class="map__zones reveal" role="group" aria-label="Zona del mapa">
       <button type="button" class="map__zone" data-zone="todo" aria-pressed="true">Todo</button>
@@ -1056,6 +1155,7 @@
           <span class="home__tag">Ya disponible en Mérida</span>
           <h4>Servicio a domicilio</h4>
           <p>Vamos a tu casa u oficina a tomar tus muestras, dentro y fuera del Periférico. Sin filas, sin traslados.</p>
+          <a class="call call--light" href="tel:+529971251007" style="margin-top:.7rem"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i>o llámanos al <b>997 125 1007</b></a>
         </div>
         <a class="btn btn--primary home__btn rock" href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20servicio%20a%20domicilio%20en%20M%C3%A9rida" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>
@@ -1104,6 +1204,7 @@
         </div>
         <div class="tst__cta reveal d3">
           <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20agendar%20un%20estudio" class="btn btn--primary" target="_blank" rel="noopener">Vive la experiencia Inovalab</a>
+          <a class="call" href="tel:+529971251007"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i><b>997 125 1007</b></a>
         </div>
       </div>
     </div>
@@ -1121,6 +1222,7 @@
         <a href="https://wa.me/529971251007?text=Hola%20Inovalab%2C%20quiero%20una%20propuesta%20para%20mi%20empresa" class="btn btn--light" target="_blank" rel="noopener">Solicita tu propuesta
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
+        <a class="call call--light" href="tel:+529971251007" style="display:flex;width:fit-content;margin-top:1.1rem"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i>o llama al <b>997 125 1007</b></a>
       </div>
       <ul class="biz__list">
         <li><b>Convenio empresarial</b>Descuentos o tarifas preferenciales para colaboradores.</li>
@@ -1305,7 +1407,7 @@
   }, { threshold: .15 });
   // ?static muestra todo sin animación (útil para capturas de revisión)
   if (location.search.includes('static')) document.documentElement.style.setProperty('--static', 1), document.querySelectorAll('.reveal, .scrub').forEach(el => { el.style.transition = 'none'; el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(c => c.textContent = (c.dataset.prefix || '') + fmt(+c.dataset.count) + (c.dataset.suffix || '')); });
-  else document.querySelectorAll('.reveal, .scrub').forEach(el => io.observe(el));
+  else (window.inovaReady || Promise.resolve()).then(() => document.querySelectorAll('.reveal, .scrub').forEach(el => io.observe(el)));
 
   // accordion: keep one value open at a time
   const vals = document.querySelectorAll('.value');
