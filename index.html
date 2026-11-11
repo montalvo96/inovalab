@@ -89,6 +89,13 @@
   .call:hover b{background-size:100% 2px}
   .call:hover i{scale:1.1}
   .call--light i{background:#fff;color:var(--magenta)}
+  /* Botón de sonido sobre los videos */
+  .ph:has(video){cursor:pointer}
+  .snd{position:absolute;left:.7rem;bottom:.7rem;z-index:2;display:inline-flex;align-items:center;gap:.4rem;border:0;border-radius:999px;padding:.4rem .75rem .4rem .45rem;background:rgba(16,53,135,.78);color:#fff;font:600 .75rem/1 "Poppins",system-ui,sans-serif;backdrop-filter:blur(4px);pointer-events:none;transition:background .25s}
+  .snd svg{width:18px;height:18px;flex:none}
+  .snd.is-on{background:var(--magenta)}
+  .snd.is-on span{display:none}
+  .snd.is-on{padding:.4rem}
   .soon .home a.call{color:#fff;font-weight:500}
   .tst__cta{align-items:center}
   .hero__art{position:relative;aspect-ratio:7/6;max-width:660px;justify-self:end;width:100%}
@@ -1563,6 +1570,36 @@
   // reels: play while visible, pause when off screen
   const reelIO = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: .4 });
   document.querySelectorAll(".social__reels video").forEach(v => { reelIO.observe(v); v.addEventListener("dblclick", e => e.preventDefault()); });
+
+  // Sonido de videos: todos se reproducen en silencio; al tocar uno se le activa el sonido
+  // y los demás siguen reproduciéndose pero en silencio. Tocarlo otra vez lo vuelve a silenciar.
+  const vids = [...document.querySelectorAll('.ph video')];
+  const icoOff = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9zm12.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>';
+  const icoOn = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9zm11.5 3A4.5 4.5 0 0 0 13 8v8a4.5 4.5 0 0 0 2.5-4zM13 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+  const paint = v => {
+    const b = v._snd; if (!b) return;
+    b.innerHTML = (v.muted ? icoOff : icoOn) + '<span>' + (v.muted ? 'Toca para escuchar' : 'Sonido activado') + '</span>';
+    b.classList.toggle('is-on', !v.muted);
+    b.setAttribute('aria-pressed', String(!v.muted));
+  };
+  const toggleSound = v => {
+    const turnOn = v.muted;
+    vids.forEach(o => { if (o !== v) { o.muted = true; paint(o); } });
+    v.muted = !turnOn;
+    if (v.paused) v.play().catch(() => {});
+    paint(v);
+  };
+  vids.forEach(v => {
+    v.removeAttribute('controls');
+    v.muted = true; v.playsInline = true;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'snd';
+    b.setAttribute('aria-label', 'Activar o silenciar el sonido de este video');
+    v.after(b); v._snd = b; paint(v);
+    v.closest('.ph').addEventListener('click', e => { e.preventDefault(); toggleSound(v); });
+    v.addEventListener('volumechange', () => paint(v));
+    if (!v.closest('.social__reels')) reelIO.observe(v); // el video de bienvenida también se pausa fuera de pantalla
+  });
 </script>
 </body>
 </html>
